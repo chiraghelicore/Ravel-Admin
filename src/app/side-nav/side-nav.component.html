@@ -1,0 +1,50 @@
+
+
+<div (click) = "sideNavSwitch()" class="nav-toogler">
+    <img src="../../assets/png/outline_menu_black_24dp.png" alt="menu">
+</div>
+
+<div (click) = "closeNavSwitch()" class="side-toogle" *ngIf = "_cmnservice.sideNavSwitch">
+    <img src="../../assets/png/outline_close_black_24dp.png" alt="close">
+</div>
+<!-- <span> {{_cmnservice.sideNavSwitch}} </span> -->
+<div [ngClass]="{ 'show-side-nav' : _cmnservice.sideNavSwitch === true, 'side-nav-bg' : _cmnservice.sideNavSwitch === false }">
+    <div class="ravel-logo">
+        <img src="../../assets/png/ravel-final01 1.png" alt="logo">
+    </div>
+
+    <div class="logo-underline"> <img src="../../assets/png/divider.png" alt="divider"> </div>
+
+    <div class="menu-list">
+        <div class="menu"  (click)= "switchMenuItem(0)"  routerLink = "/dashboard">
+           <div [ngClass] = "_cmnservice.menuListIndex === 0 ? 'white' : 'gray'"> <img   src="../../assets/png/Home-active.png" > </div>
+
+            <span [ngClass] = "_cmnservice.menuListIndex === 0 ? 'span-active' : 'span-deactive' "> Dashboard </span>
+        </div>
+
+        <div class="menu" (click)= "switchMenuItem(1)"  routerLink = "/users">
+            <div [ngClass] = "_cmnservice.menuListIndex === 1 ? 'white' : 'gray'"> <img  src="../../assets/png/Group 294 -active.png" > </div>
+         
+            <span [ngClass] = "_cmnservice.menuListIndex === 1 ? 'span-active' : 'span-deactive' "> Users </span>
+        </div>
+
+        <div class="menu"  (click)= "switchMenuItem(2)" routerLink = "/transaction">
+         
+            <div [ngClass] = "_cmnservice.menuListIndex === 2 ? 'white' : 'gray'">  <img src="../../assets/png/4177548_ecommerce_shop_transaction_icon 1-active.png" alt="Transaction"> </div>
+            <span [ngClass] = "_cmnservice.menuListIndex === 2 ? 'span-active' : 'span-deactive' "> Transaction </span>
+        </div>
+
+        <div class="menu"  (click)= "switchMenuItem(3)" routerLink = "/support">
+            
+            <div [ngClass] = "_cmnservice.menuListIndex === 3 ? 'white' : 'gray'">   <img src="../../assets/png/support-active.png" alt="support"> </div>
+            <span [ngClass] = "_cmnservice.menuListIndex === 3 ? 'span-active' : 'span-deactive' "> Support </span>
+        </div>
+
+        <div class="logoutmenu" (click) = "logout()">
+            <img class="logout" src="../../assets/png/outline_power_settings_new_black_24dp.png" alt="logout"> 
+           <span class="logout-span"> Logout </span>
+        </div>
+
+   
+    </div>
+</div>

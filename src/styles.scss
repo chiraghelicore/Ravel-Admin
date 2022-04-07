@@ -1,0 +1,209 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+@import "~ngx-toastr/toastr";
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$ravel-primary: mat.define-palette(mat.$indigo-palette);
+$ravel-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$ravel-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$ravel-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $ravel-primary,
+      accent: $ravel-accent,
+      warn: $ravel-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($ravel-theme);
+
+/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+}
+
+@import "~bootstrap/dist/css/bootstrap.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+
+.body {
+  padding-top: 70px;
+  padding-left: 235px;
+  width: 98vw;
+  height: auto;
+}
+
+.title {
+  width: 169px;
+  height: 29px;
+
+  font-family: "Manrope", sans-serif;
+  font-weight: bold;
+  font-size: 20.45px;
+  line-height: 29px;
+  letter-spacing: 0.85px;
+  color: #171717;
+  opacity: 0.5;
+}
+
+.search-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 96%;
+  height: auto;
+  flex-wrap: wrap;
+
+  .date-filter {
+    width: auto;
+    height: auto;
+
+    ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+      height: 0px;
+    }
+
+    ::ng-deep .mat-form-field-flex {
+      width: auto;
+      align-items: center;
+    }
+
+    ::ng-deep .mat-form-field-label {
+      font-size: 16px;
+      padding-left: 10px;
+      font-family: "Manrope", sans-serif;
+    }
+
+    ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+      padding: 0px;
+    }
+
+    .date-field {
+      border: 2px solid #eeeeee;
+      box-sizing: border-box;
+      border-radius: 4px;
+      width: 185px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 5px;
+
+      input {
+        color: #b9b9b9;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: "Manrope", sans-serif;
+        text-align: center;
+        padding: 5px;
+      }
+
+      mat-datepicker-toggle {
+        width: 14px;
+        height: 24px;
+      }
+    }
+  }
+
+  .search-container {
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    border: hidden;
+    margin-right: 10px;
+  }
+}
+
+.user-table,
+.transaction-table {
+  width: 97%;
+  box-shadow: 0px 1px 0px #dadbe4;
+  background: #eff0f6;
+  font-family: "Manrope", sans-serif;
+}
+
+.support-table {
+  width: 97%;
+  box-shadow: 0px 1px 0px #dadbe4;
+  background: #eff0f6;
+  font-family: "Manrope", sans-serif;
+
+  .td-error {
+    text-align: center;
+    word-wrap: break-word;
+    width: 160px;
+    font-size: 12px;
+    line-height: 140%;
+    font-family: "Manrope", sans-serif;
+    padding: 2px 10px;
+  }
+}
+
+@media (max-width: 950px) {
+  .body {
+    padding-left: 35px;
+  }
+}
+
+.logoutmenu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 28.23px;
+  margin-left: 20px;
+}
+.logout {
+  filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg)
+    brightness(95%) contrast(0%);
+
+  width: 20px;
+  height: 20px;
+}
+
+.logoutmenu:hover {
+  img {
+    filter: invert(203%) sepia(26%) saturate(2000%) hue-rotate(232deg)
+      brightness(500%) contrast(500%);
+  }
+
+  .logout-span {
+    color: white;
+    cursor: pointer;
+  }
+}
+
+.logout-span {
+  font-family: "Manrope", sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 29px;
+  color: #ffffff;
+  opacity: 0.5;
+  margin-left: 10.65px;
+}

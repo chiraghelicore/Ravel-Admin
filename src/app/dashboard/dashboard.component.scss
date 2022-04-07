@@ -1,0 +1,252 @@
+@mixin flex-btwn($jus-con, $al-it) {
+  display: flex;
+  justify-content: $jus-con;
+  align-items: $al-it;
+}
+
+@mixin flex-align{
+  display: flex;
+  
+}
+
+$font-clr : #171717;
+
+.title {
+  width: 16ch;
+  height: 29px;
+  left: 17%;
+  top: 85px;
+  font-family: "Manrope", sans-serif;
+  font-weight: bold;
+  font-size: 20.45px;
+  line-height: 29px;
+  letter-spacing: 0.85px;
+  color: $font-clr;
+  opacity: 0.5;
+  margin-left: 18ch;
+  margin-bottom: 0px;
+}
+
+.dashboard-data {
+  @include flex-btwn(space-evenly,flex-start);
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  margin: auto;
+  
+}
+
+// ------------------------------------------------------------------------------------------------------------
+
+.grid-container {
+
+  @include flex-btwn(space-between, center);
+  flex-wrap: wrap;
+  left: 17%;
+  top: 20%;
+  margin-left: 27ch;
+  margin-top: 15px;
+  width: 65vw;
+  height: auto;
+
+  .grid-item {
+    background: #ffffff;
+    box-shadow: 0px 12.7812px 42.6042px rgb(160 163 189 / 20%);
+    border-radius: 8.52083px;
+    height: 12ch;
+    flex: 1 1 23ch;
+    margin: 15px;
+
+    .items {
+      @include flex-btwn(space-around,center);
+
+      width: 26ch;
+      height: 100%;
+      margin: auto;
+
+      .icon {
+        width: 5ch;
+        height: auto;
+        margin-right: 30px;
+      }
+
+      .data {
+        @include flex-align();
+        flex-direction: column;
+        margin: auto;
+
+        .num-data {
+          font-family: "Manrope", sans-serif;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 2ch;
+          line-height: 21px;
+          color: #171717;
+          margin-bottom: 5.15px;
+        }
+
+        .data-name {
+          font-family: "Manrope", sans-serif;
+          font-weight: normal;
+          font-size: 1.5ch;
+          line-height: 16px;
+          color: #b9b9b9;
+        }
+
+        .percentage-time {
+          img {
+            width: 2ch;
+            height: auto;
+          }
+
+          .percentage-up {
+            font-size: 1.2ch;
+            line-height: 16px;
+            color: #4bde97;
+            font-family: "Manrope", sans-serif;
+          }
+
+          .percentage-down {
+            font-size: 1.2ch;
+            line-height: 16px;
+            color: #f26464;
+            font-family: "Manrope", sans-serif;
+          }
+
+          .time {
+            color: #b9b9b9;
+            font-family: "Manrope", sans-serif;
+            /* Inside Auto Layout */
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+            margin: 0px 8.52083px;
+            font-size: 1.2ch;
+            line-height: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------------------------------------
+
+.chart {
+  width: 85ch;
+  height: 345.2px;
+  background: #ffffff;
+  box-shadow: 0px 12.7812px 42.6042px rgba(160, 163, 189, 0.2);
+  border-radius: 8.52083px;
+  top: 437px;
+  left: 240px;
+  padding: 18px;
+  margin-left: 27ch;
+  margin-top: 5ch;
+
+  .databar {
+    @include flex-btwn(space-between, center);
+    width: 80ch;
+    position: absolute;
+
+    .chart-title {
+      @include flex-btwn(space-between, center);
+      flex-direction: column;
+      align-items: flex-start;
+      
+      width: 111.95px;
+      height: 43.85px;
+
+      .title-name {
+        font-family: "Manrope", sans-serif;
+        color: #171717;
+        /* Inside Auto Layout */
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+        margin: 6.81667px 0px;
+        font-size: 1.5ch;
+        line-height: 120%;
+        font-weight: bold;
+      }
+
+      .subtitle {
+        font-size: 1.5ch;
+        line-height: 140%;
+        /* Label */
+        color: #b9b9b9;
+        /* Inside Auto Layout */
+        flex: none;
+        order: 2;
+        flex-grow: 0;
+        margin: 6.81667px 0px;
+      }
+    }
+
+    .chart-months {
+     @include flex-btwn(space-between, center);
+      width: 200px;
+      margin-right: 15px;
+
+      .indicator {
+        @include flex-btwn(center,flex-start);
+        flex-direction: column;
+        justify-content: center;
+       
+
+        .chart-info {
+          font-family: "Roboto", sans-serif;
+          font-weight: 500;
+          font-size: 1ch;
+          line-height: 140%;
+          text-transform: uppercase;
+          color: #b9b9b9;
+        }
+
+        .chart-num {
+          font-family: "Roboto", sans-serif;
+          font-weight: 500;
+          font-size: 1.5ch;
+          line-height: 120%;
+          color: #171717;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 950px) {
+  .grid-container {
+    display: flex;
+
+    // position: absolute;
+    left: 5%;
+    top: 20%;
+    flex-wrap: wrap;
+    margin-bottom: 5ch;
+    margin-left: 2ch;
+  }
+
+  .title {
+    margin-left: 2ch;
+  }
+}
+
+@media (max-width: 950px) {
+  .chart {
+    width: 95%;
+    height: 345.2px;
+    background: #ffffff;
+    box-shadow: 0px 12.7812px 42.6042px rgb(160 163 189 / 20%);
+    border-radius: 8.52083px;
+    // position: relative;
+    top: 437px;
+    left: 240px;
+    padding: 18px;
+    margin-left: 2ch;
+
+    .databar {
+      width: 90%;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+::ng-deep table.mat-table {
+  width: 100%;
+}
+
+::ng-depp td.mat-cell
+{
+  text-align: center;
+}
+
+::ng-deep tr.mat-header-row {
+  background: #eff0f6;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  color: #767676;
+}
+
+::ng-deep mat-sort-header-content {
+  margin: auto;
+}
+
+.search-btn {
+  position: absolute;
+  right: 55px;
+  top: 8px;
+}
+
+@media (max-width: 950px) {
+  .transaction-table {
+    left: 35px;
+    z-index: -50;
+  }
+
+  .search-filter {
+    left: 35px;
+  }
+
+  .title {
+    left: 35px;
+    margin-bottom: 25px;
+  }
+}

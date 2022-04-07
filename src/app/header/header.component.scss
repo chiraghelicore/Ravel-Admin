@@ -1,0 +1,89 @@
+.header
+
+{
+    width: 80%;
+    height: 68px;
+    position: relative;
+    // left: 216px;
+    top: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    float: right;
+    padding-left: 150px;
+    margin-right: 10px;
+
+}
+
+
+
+.language
+{
+    width: 19px;
+    height: 19px;
+    // position: absolute;
+    // top: 25.41px;
+    // right: 160px;
+
+  
+    /* right: 1.7%; */
+    display: flex;
+    margin-left: 15px;
+    
+    span
+    {
+        font-family: 'Manrope', sans-serif;
+        font-size: 13.63px;
+        line-height: 19px;
+        letter-spacing: 0.63px;
+        color: #767676;
+    }
+}
+
+.dropdown
+{
+   
+    width: auto;
+    height: auto;
+    /* position: absolute; */
+    /* top: 25%; */
+    /* right: 1.7%; */
+    display: flex;
+    margin-left: 15px;
+    img 
+    {
+        width: auto;
+    }
+}
+
+
+.notification
+{
+    width: auto;
+    height: auto;
+    /* position: absolute; */
+    /* top: 25%; */
+    /* right: 1.7%; */
+    display: flex;
+    margin-left: 15px;
+    img 
+    {
+        width: auto;
+    }
+}
+
+
+.avtar
+{
+    width: auto;
+    height: auto;
+    /* position: absolute; */
+    /* top: 25%; */
+    /* right: 1.7%; */
+    display: flex;
+    margin-left: 15px;
+    img 
+    {
+        width: auto;
+    }
+}

@@ -1,0 +1,182 @@
+
+
+
+
+
+
+
+::ng-deep table.mat-table {
+  width: 100%;
+}
+
+::ng-deep th.mat-header-cell {
+  text-align: center;
+}
+
+::ng-deep tr.mat-header-row {
+  background: #eff0f6;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  color: #767676;
+}
+
+::ng-deep .mat-sort-header-content {
+  margin: auto;
+}
+
+.navy-blue {
+  background-color: rgba(25, 39, 75, 1);
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  font-family: "Inter", sans-serif;
+}
+
+
+.search-btn {
+  position: absolute;
+  right: 55px;
+  top: 8px;
+}
+
+// -----------------------------------------------------------------------------------------------------------
+
+.viewform {
+  width: 70vw;
+  height: 585px;
+  // position: absolute;
+  // left: 235px;
+  // top: 155px;
+  background: #ffffff;
+  box-shadow: 0px 5px 10px rgba(134, 142, 216, 0.25);
+  padding: 15px;
+
+  .userid-view,
+  .title-view,
+  .status-view {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 275px;
+    height: 45px;
+    margin-bottom: 30px;
+
+    label {
+      font-size: 15px;
+      line-height: 34px;
+      color: #171717;
+      font-family: "Manrope", sans-serif;
+      font-weight: bold;
+    }
+
+    input {
+      background: #eff0f6;
+      border-radius: 8px;
+      padding: 5px 16px;
+      border: hidden;
+      width: 200px;
+      height: 45px;
+      font-family: "Manrope", sans-serif;
+      font-size: 14px;
+      line-height: 34px;
+      font-weight: bolder;
+    }
+  }
+
+  .error-view {
+    width: 525px;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+
+    label {
+      font-size: 15px;
+      line-height: 34px;
+      color: #171717;
+      font-family: "Manrope", sans-serif;
+      font-weight: bold;
+    }
+
+    input {
+      background: #eff0f6;
+      border-radius: 10px;
+      padding: 5px 16px;
+      border: hidden;
+      width: 525px;
+      height: 175px;
+      font-family: "Manrope", sans-serif;
+      font-size: 14px;
+      line-height: 34px;
+      font-weight: bolder;
+    }
+  }
+
+  .submit-btn {
+    background: radial-gradient(
+      122.27% 198.92% at -22.27% -27.38%,
+      #44ace1 0%,
+      #1546a0 100%
+    );
+    box-shadow: 0px 24px 48px -18px rgba(21, 70, 160, 0.5);
+    border-radius: 12px;
+    width: 105px;
+    height: 36px;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 22px;
+    font-family: "Manrope", sans-serif;
+    color: white;
+    border: hidden;
+  }
+
+
+  .cancel-btn
+  {
+    background: radial-gradient(
+      122.27% 198.92% at -22.27% -27.38%,
+      #ff8585 0%,
+      #ce2620 100%
+    );
+    box-shadow: 0px 24px 48px -18px rgba(160, 58, 21, 0.5);
+    border-radius: 12px;
+    width: 105px;
+    height: 36px;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 22px;
+    font-family: "Manrope", sans-serif;
+    color: white;
+    border: hidden;
+    margin-left: 15px;
+  }
+}
+
+::ng-deep .mat-select-value {
+  text-align: center;
+}
+
+
+@media (max-width: 950px)
+{
+  .support-table{
+    left: 35px;
+    z-index: -50;
+  }
+
+  .search-filter
+  {
+    left: 35px;
+  }
+
+  .title
+  {
+    left: 35px;
+    margin-bottom: 25px;
+  }
+}
