@@ -5,15 +5,40 @@
 ::ng-depp td.mat-cell
 {
   text-align: center;
+  font-family: "Inter", sans-serif;
 }
 
+.mat-header-cell {
+  text-align: center;
+  font-weight: bold;
+  font-size: medium;
+  font-family: sans-serif;
+  line-height: 140%;
+  color: #767676;
+}
+.mat-header-row {
+  color: black;
+  background-color: #EFF0F1;
+}
 ::ng-deep tr.mat-header-row {
   background: #eff0f6;
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
+  font-family: sans-serif;
+  font-weight: bold;
   font-size: 14px;
   line-height: 140%;
   color: #767676;
+}
+mat-header-cell {
+  display:flex;
+  justify-content:flex-end;
+}
+::ng-deep .mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+  font-weight: bold;
+}
+.mat-cell {
+  text-align: center;
 }
 
 ::ng-deep mat-sort-header-content {
@@ -40,4 +65,22 @@
     left: 35px;
     margin-bottom: 25px;
   }
+}
+::ng-deep tr.mat-cell {
+  font-family: sans-serif;
+  font-size: 13px;
+  line-height: 140%;
+  color: #767676;
+}
+.mat-row:hover{
+  background-color: #F5F5F5;
+}
+
+.noTrasDataClass {
+  height: 48px;
+  text-align: center;
+  background: #eff0f6;
+  margin-top: 20%;
+  font-weight: 600;
+  font-family: "Manrope", sans-serif;
 }

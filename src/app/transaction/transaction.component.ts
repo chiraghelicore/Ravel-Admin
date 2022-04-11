@@ -1,9 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -19,9 +14,9 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./transaction.component.scss'],
 })
 export class TransactionComponent implements OnInit {
-  displayedColumns = ['no', 'sendname', 'receivername', 'date', 'amount'];
+  displayedColumns = ['no', 'sendname', 'receivername', 'updated_at', 'amount'];
 
-  dataSource!: MatTableDataSource<any>;
+  dataSource!: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,7 +27,7 @@ export class TransactionComponent implements OnInit {
   next_page_url: any;
   prev_page_url: any;
   rowdata: any;
-  transData: any;
+  transData = new MatTableDataSource<any>();
   totalpage = 0;
   pageSize!: number;
   currentPage = 0;
@@ -52,6 +47,9 @@ export class TransactionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.transData.sort = this.sort;
+    
     // this.storedata();
     this.getTransactionDetails();
 
@@ -88,6 +86,18 @@ export class TransactionComponent implements OnInit {
     });
 
     this._cmnservice.menuListIndex = 2;
+
+
+    this.transData.sortingDataAccessor = (data, property) => {
+      switch (property) {
+          case 'no': return data.index;
+          case 'sendname': return data?.from_user?.first_name;
+          case 'receivername': return data.to_user?.first_name;
+          case 'updated_at': return data?.updated_at;
+          case 'amount': return data?.amount;
+          default: return data[property];
+      }
+    }
   }
 
   convertDate(start: any, end: any) {
@@ -169,10 +179,13 @@ export class TransactionComponent implements OnInit {
     } else {
       this._authservice.getTransactionDetails().subscribe(
         (res) => {
+          console.log("---------------------------------------");
+        console.log(res);
+        console.log("---------------------------------------");
           console.log('initial data :-', res);
           this.rowdata = res;
           window.scroll(0, -400);
-          this.transData = this.rowdata.data;
+          this.transData.data = this.rowdata.data;
           this.currentPage = this.rowdata.current_page;
           this.links = this.rowdata.links;
 
@@ -190,14 +203,19 @@ export class TransactionComponent implements OnInit {
           }
 
           // For Pagination
-          this.dataSource = new MatTableDataSource<any>(this.transData);
-          this.dataSource.paginator = this.paginator;
-          console.log('datasource', this.dataSource);
+          this.dataSource = new MatTableDataSource<any>(this.transData.data);
+          // this.dataSource.paginator = this.paginator;
+          // this.dataSource.sort = this.sort
+          
 
-          this.dataSource.sort = this.sort;
+          this.transData.paginator = this.paginator;
+          // this.transData.sort = this.sort;
 
-          // console.log('link length :', this.links);
-          // console.log('current page', this.currentPage);
+          setTimeout(
+            () =>
+                (this.transData.sort = this.sort),
+            10
+        );
         },
         (err) => {
           console.log(err);
