@@ -1,101 +1,105 @@
-<app-header  ></app-header>
-<app-side-nav ></app-side-nav>
+<app-header></app-header>
+<app-side-nav></app-side-nav>
 <div class="body">
-<main>
+  <main>
 
-<p class="title">Transaction</p>
+    <p class="title">Transaction</p>
 
-<div class="search-filter">
-  
-  
-    <!-- <div class="search"></div> -->
-    <mat-form-field [formGroup] = "username" class="example-form-field search-container" appearance="fill">
-    
-      <input  matInput type="text" placeholder="Search"
-      autocomplete="off"
-      formControlName = "name"
-       >
-      <button *ngIf="inputvalue" matSuffix mat-icon-button aria-label="Clear" (click)="clearInput()">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
+    <div *ngIf="transData; else noTransData">
+      <div class="search-filter">
 
-    <div class="date-filter">
-    
-      
-        <mat-form-field appearance="fill">
-          <mat-label>Enter a date range</mat-label>
-          <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-            <input matStartDate formControlName="start" placeholder="Start date">
-            <input matEndDate formControlName="end" placeholder="End date">
-          </mat-date-range-input>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
-        
-          <!-- <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-          <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+        <!-- <div class="search"></div> -->
+        <mat-form-field [formGroup]="username" class="example-form-field search-container" appearance="fill">
+
+          <input matInput type="text" placeholder="Search" autocomplete="off" formControlName="name">
+          <button *ngIf="inputvalue" matSuffix mat-icon-button aria-label="Clear" (click)="clearInput()">
+            <mat-icon>close</mat-icon>
+          </button>
         </mat-form-field>
-      
+
+        <div class="date-filter">
+
+          <mat-form-field appearance="fill">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+              <input matStartDate formControlName="start" placeholder="Start date">
+              <input matEndDate formControlName="end" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+
+            <!-- <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+          <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+          </mat-form-field>
+
+        </div>
+
+      </div>
+      <div class="transaction-table">
+        <table mat-table [dataSource]="transData" class="mat-elevation-z8" matSort>
+          <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef>No.</th>
+            <td mat-cell *matCellDef="let i = index">{{ rowIndex[i] }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="sendname">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Send Name</th>
+            <td mat-cell *matCellDef="let element"> <img src="../../assets/png/user.png" alt="">
+              <div *ngIf="element.from_user; else noFromUser">
+                {{ element.from_user?.first_name }} {{ element.from_user?.last_name }}
+              </div>
+            </td>
+            <ng-template #noFromUser>
+              -
+            </ng-template>
+          </ng-container>
+
+          <ng-container matColumnDef="receivername">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Receiver Name</th>
+            <td mat-cell *matCellDef="let element"> <img src="../../assets/png/user.png" alt="">
+              <div *ngIf="element.to_user; else noToUser">
+                {{ element.to_user?.first_name }} {{ element.to_user?.last_name }}
+              </div>
+            </td>
+            <ng-template #noToUser>
+              -
+            </ng-template>
+          </ng-container>
+
+          <ng-container matColumnDef="updated_at">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+            <td mat-cell *matCellDef="let element">{{ element.updated_at | date }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Amount
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="element.amount; else noAmount">
+                {{ element.amount }}
+              </div>
+            </td>
+            <ng-template #noAmount>
+              -
+            </ng-template>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator #paginator [length]="totalpage" [pageSize]="pageSize" aria-label="Select page"
+          (page)="pageChanged($event)">
+        </mat-paginator>
+      </div>
     </div>
-
- 
-
-    
-  
- 
+  </main>
 </div>
 
-
-
-
-
-<div class="transaction-table">
-    <table mat-table matSort [dataSource]="transData" class="mat-elevation-z8">
-      <ng-container matColumnDef="no">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>No.</th>
-        <td mat-cell *matCellDef="let i = index">{{ rowIndex[i] }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="sendname">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>Send Name</th>
-        <td mat-cell *matCellDef="let element"> <img  src="../../assets/png/user.png" alt=""> {{ element.from_user_id }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="receivername">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef> Receiver Name</th>
-        <td mat-cell *matCellDef="let element"> <img  src="../../assets/png/user.png" alt=""> {{ element.to_user_id }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="date">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>Date</th>
-        <td mat-cell *matCellDef="let element">{{ element.updated_at | date }}</td>
-      </ng-container>
-
-  
-
-      <ng-container matColumnDef="amount">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>
-           Amount
-        </th>
-        <td mat-cell *matCellDef="let element">{{ element.amount }}</td>
-      </ng-container>
-
-    
-
-    
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-    <mat-paginator
-      #paginator
-      [length]="totalpage"
-       [pageSize]="pageSize"
-     
-      aria-label="Select page"
-      (page)="pageChanged($event)"
-    >
-    </mat-paginator>
+<ng-template #noTransData>
+  <div class="noTrasDataClass">
+    <div>
+      No Data Found for Transaction.
+    </div>
   </div>
-</main>
-</div>
+</ng-template>
