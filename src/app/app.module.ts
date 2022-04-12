@@ -20,6 +20,7 @@ import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { AuthguardGuard } from './guards/authguard.guard';
 import { DatePipe } from '@angular/common';
 import { MaterialModule } from './material.module';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 
 
@@ -42,7 +43,8 @@ const appRoutes: Routes = [
     TransactionComponent,
     SupportComponent,
     HeaderComponent,
-    LoginComponent
+    LoginComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,

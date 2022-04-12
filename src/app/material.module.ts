@@ -19,6 +19,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 const MATERIAL_MODULES = [
@@ -37,6 +38,7 @@ const MATERIAL_MODULES = [
     MatNativeDateModule,
     MatSortModule,
     MatTableModule,
+    MatDialogModule
 ];
 
 @NgModule({
