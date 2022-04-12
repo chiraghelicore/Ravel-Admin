@@ -62,8 +62,12 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: center;">View</th>
             <td mat-cell *matCellDef="let row" style="text-align: center;">
-              <button mat-stroked-button class="navy-blue" (click)="openView(row)">
+              <!-- <button mat-stroked-button class="navy-blue" (click)="openView(row)">
                 View
+              </button> -->
+
+              <button mat-icon-button aria-label="View" class="navy-blue" (click)="openView(row)" matTooltip="View">
+                <mat-icon>view_headline</mat-icon>
               </button>
             </td>
           </ng-container>

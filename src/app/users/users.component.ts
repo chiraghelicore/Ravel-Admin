@@ -52,7 +52,7 @@ export class UsersComponent implements OnInit {
     'mobile',
     'balance',
     'actions',
-    'delete',
+    // 'delete',
   ];
 
   //-----------------------------------------------------------------------------
