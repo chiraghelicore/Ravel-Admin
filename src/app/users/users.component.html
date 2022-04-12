@@ -49,8 +49,11 @@
       </ng-container>
 
       <ng-container matColumnDef="first_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header >Name</th>
-        <td mat-cell *matCellDef="let element"> <img  src={{element.profile_pic}} alt="error"> {{ element.first_name  }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let element" style="text-align: left;"> 
+          <img src={{element.profile_pic}} alt="error"> 
+          <div style="display: inline-block; margin-left: 5px;">{{ element.first_name  }}</div>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="email">
@@ -73,16 +76,17 @@
       <ng-container matColumnDef="actions">
         <th style="text-align: center;" mat-header-cell *matHeaderCellDef>Add</th>
         <td style="text-align: center;" mat-cell *matCellDef="let row">
-          <button mat-raised-button class="success" (click)="openUpdate(row)">
+          <button mat-stroked-button class="success" (click)="openUpdate(row)">
             Update
           </button>
+          
         </td>
       </ng-container>
 
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef>Delete</th>
         <td mat-cell *matCellDef="let row">
-          <button mat-raised-button class="danger" (click)="deleteData(row)">Delete</button>
+          <button mat-stroked-button class="danger" (click)="deleteData(row)">Delete</button>
         </td>
       </ng-container>
 
@@ -171,8 +175,8 @@
       </div>
       
     </form>
-    <button class="user-update-btn" mat-raised-button color="primary" (click) = "updateUser()"> Update </button>
-    <button class="cancel-update-btn" mat-raised-button (click) = "cancelUpdateUser()"> Back </button>
+    <button class="user-update-btn" mat-stroked-button color="primary" (click) = "updateUser()"> Update </button>
+    <button class="cancel-update-btn" mat-stroked-button (click) = "cancelUpdateUser()"> Back </button>
   </div>
 </div>
 </main>

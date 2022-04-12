@@ -158,28 +158,10 @@ export class TransactionComponent implements OnInit {
     if (startdate == null || enddate == null) {
       return;
     }
-
-    console.log(this.dataSource);
-
-    // let filterData = {
-    //   "startDate": startdate,
-    //   "endDate": enddate
-    // }
-
     this.filteredValues['startDate'] = startdate;
     this.filteredValues['endDate'] = enddate;
     
     this.transData.filter = JSON.stringify(this.filteredValues);
-    // this.dataSource.filter = enddate;
-
-    console.log(this.transData.filter);
-
-
-    // this.transData.filterPredicate = (data, filter) => {
-    //   const dataStr = data?.updated_at > startdate? && ;
-    //   return dataStr.indexOf(filter) != -1; 
-    // }
-    // this.filterDataByDate(startdate, enddate);
   }
 
   filterDataByDate(start: any, end: any) {
@@ -276,7 +258,7 @@ export class TransactionComponent implements OnInit {
           
 
           this.transData.paginator = this.paginator;
-          // this.transData.sort = this.sort;
+          this.transData.sort = this.sort;
 
           setTimeout(
             () =>

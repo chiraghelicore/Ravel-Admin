@@ -16,7 +16,7 @@ import { DatePipe } from '@angular/common';
 export class SupportComponent implements OnInit {
   displayedColumns = ['no', 'user_id', 'title', 'description', 'status', 'actions'];
 
-  dataSource= new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -42,11 +42,11 @@ export class SupportComponent implements OnInit {
     public _cmnservice: CmnServiceService,
     private _authservice: AuthServiceService,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
-  this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;
 
     this.getSupportData();
     this.viewMode = false;
@@ -102,11 +102,11 @@ export class SupportComponent implements OnInit {
       console.log("DATA");
       console.log(data);
       switch (property) {
-          case 'user_id': return data.user_id;
-          case 'title': return data?.title;
-          case 'description': return data?.description;
-          case 'status': return data?.status;
-          default: return data[property];
+        case 'user_id': return data.user_id;
+        case 'title': return data?.title;
+        case 'description': return data?.description;
+        case 'status': return data?.status;
+        default: return data[property];
       }
     }
   }
@@ -148,9 +148,9 @@ export class SupportComponent implements OnInit {
         this.supportData = this.rowdata.data;
         this.totalpage = this.rowdata.total;
         this.links = this.rowdata.links;
-        this.pageSize = this.rowdata.per_page;      
+        this.pageSize = this.rowdata.per_page;
         this.currentPage = this.rowdata.current_page;
-        
+
 
         let from = this.rowdata.from;
         let to = this.rowdata.to;
@@ -260,9 +260,9 @@ export class SupportComponent implements OnInit {
         this.supportData = this.rowdata.data;
         this.totalpage = this.rowdata.total;
         this.links = this.rowdata.links;
-        this.pageSize = this.rowdata.per_page;      
+        this.pageSize = this.rowdata.per_page;
         this.currentPage = this.rowdata.current_page;
-        
+
 
         let from = this.rowdata.from;
         let to = this.rowdata.to;
