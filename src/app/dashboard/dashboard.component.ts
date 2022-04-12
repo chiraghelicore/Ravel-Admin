@@ -17,8 +17,6 @@ export class DashboardComponent implements OnInit {
   total_wallet_amount:any
   rowdata:any;
 
-
-
   constructor(public _cmnservice : CmnServiceService, private _authservice : AuthServiceService) { }
 
   ngOnInit(): void {
@@ -27,7 +25,6 @@ export class DashboardComponent implements OnInit {
     this.getDahsData();
     this.getCarPapers();
   }
-
 
   getDahsData()
   {
@@ -51,7 +48,6 @@ export class DashboardComponent implements OnInit {
 
   }
 
-
   getCarPapers()
   {
     this._authservice.getCarPapers().subscribe(
@@ -64,5 +60,4 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
-
 }

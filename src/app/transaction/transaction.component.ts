@@ -1,9 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,15 +8,22 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
+export interface MyFilter {
+  userName: string,
+    startDate: any,
+    endDate: any
+}
+
+
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.scss'],
 })
 export class TransactionComponent implements OnInit {
-  displayedColumns = ['no', 'sendname', 'receivername', 'date', 'amount'];
+  displayedColumns = ['no', 'sendname', 'receivername', 'updated_at', 'amount'];
 
-  dataSource!: MatTableDataSource<any>;
+  dataSource!: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,7 +34,7 @@ export class TransactionComponent implements OnInit {
   next_page_url: any;
   prev_page_url: any;
   rowdata: any;
-  transData: any;
+  transData = new MatTableDataSource<any>();
   totalpage = 0;
   pageSize!: number;
   currentPage = 0;
@@ -44,6 +46,8 @@ export class TransactionComponent implements OnInit {
   range!: FormGroup;
   username!: FormGroup;
 
+  filteredValues: MyFilter = { userName: '', startDate: null, endDate: null };
+
   constructor(
     private _authservice: AuthServiceService,
     public _cmnservice: CmnServiceService,
@@ -52,6 +56,9 @@ export class TransactionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.transData.sort = this.sort;
+    
     // this.storedata();
     this.getTransactionDetails();
 
@@ -77,18 +84,71 @@ export class TransactionComponent implements OnInit {
     });
 
     this.username.valueChanges.subscribe((res) => {
-      // console.log(res);
-      if (this.username.value.name === '') {
-        window.location.reload();
-      } else if (this.username.status === 'INVALID') {
-        return;
-      } else if (this.username.status === 'VALID') {
-        this.filterDataByKeyword(res.name);
-      }
+      console.log(res.name);
+      this.filteredValues['userName'] = res.name;
+      this.transData.filter = JSON.stringify(this.filteredValues);
     });
+    // this.username.valueChanges.subscribe((res) => {
+    //   // console.log(res);
+    //   if (this.username.value.name === '') {
+    //     window.location.reload();
+    //   } else if (this.username.status === 'INVALID') {
+    //     return;
+    //   } else if (this.username.status === 'VALID') {
+    //     this.filterDataByKeyword(res.name);
+    //   }
+    // });
 
     this._cmnservice.menuListIndex = 2;
+
+
+    this.transData.sortingDataAccessor = (data, property) => {
+      switch (property) {
+          case 'no': return data.index;
+          case 'sendname': return data?.from_user?.first_name;
+          case 'receivername': return data.to_user?.first_name;
+          case 'updated_at': return data?.updated_at;
+          case 'currentamount': return data?.currentamount;
+          default: return data[property];
+      }
+    }
+
+    this.transData.filterPredicate = this.customFilterPredicate();
+
+    // this.transData.filterPredicate = (data: any, filter: any) => !filter || filter.startDate < data.updated_at && filter.endDate > data.updated_at;
   }
+
+  
+  customFilterPredicate() {
+    return (data: any, filter: string): boolean => {
+
+        let searchString = JSON.parse(filter) as MyFilter;
+
+        if ((searchString.startDate && searchString.startDate !== '') && (searchString.endDate && searchString.endDate != '')) {
+
+            let formatedUpdateDate = data.updated_at;
+            formatedUpdateDate = this.datepipe.transform(data.updated_at, 'dd-MM-yyyy');
+
+            // (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) || 
+            // (data.to_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.toLowerCase()))
+            return (formatedUpdateDate > searchString.startDate) && (formatedUpdateDate < searchString.endDate) 
+          //   ||
+          //   (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) || 
+          // (data.to_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.toLowerCase()));
+
+        } else {
+          return (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) || 
+          (data.to_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.toLowerCase()))
+        }
+    }
+}
+
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.transData.filter = filterValue.trim().toLowerCase();
+
+  //   console.log(this.transData.filter  = filterValue.trim().toLowerCase());
+  // }
 
   convertDate(start: any, end: any) {
     let startdate = this.datepipe.transform(start, 'dd-MM-yyyy');
@@ -98,8 +158,10 @@ export class TransactionComponent implements OnInit {
     if (startdate == null || enddate == null) {
       return;
     }
-
-    this.filterDataByDate(startdate, enddate);
+    this.filteredValues['startDate'] = startdate;
+    this.filteredValues['endDate'] = enddate;
+    
+    this.transData.filter = JSON.stringify(this.filteredValues);
   }
 
   filterDataByDate(start: any, end: any) {
@@ -172,7 +234,7 @@ export class TransactionComponent implements OnInit {
           console.log('initial data :-', res);
           this.rowdata = res;
           window.scroll(0, -400);
-          this.transData = this.rowdata.data;
+          this.transData.data = this.rowdata.data;
           this.currentPage = this.rowdata.current_page;
           this.links = this.rowdata.links;
 
@@ -190,14 +252,19 @@ export class TransactionComponent implements OnInit {
           }
 
           // For Pagination
-          this.dataSource = new MatTableDataSource<any>(this.transData);
-          this.dataSource.paginator = this.paginator;
-          console.log('datasource', this.dataSource);
+          this.dataSource = new MatTableDataSource<any>(this.transData.data);
+          // this.dataSource.paginator = this.paginator;
+          // this.dataSource.sort = this.sort
+          
 
-          this.dataSource.sort = this.sort;
+          this.transData.paginator = this.paginator;
+          this.transData.sort = this.sort;
 
-          // console.log('link length :', this.links);
-          // console.log('current page', this.currentPage);
+          setTimeout(
+            () =>
+                (this.transData.sort = this.sort),
+            10
+        );
         },
         (err) => {
           console.log(err);

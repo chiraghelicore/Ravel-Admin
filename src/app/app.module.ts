@@ -90,6 +90,9 @@ const appRoutes: Routes = [
     AuthguardGuard,
     DatePipe
   ],
+  exports: [
+    MatSortModule,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

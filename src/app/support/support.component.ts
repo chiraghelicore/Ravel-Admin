@@ -1,9 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -19,9 +14,9 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./support.component.scss'],
 })
 export class SupportComponent implements OnInit {
-  displayedColumns = ['no', 'userid', 'title', 'error', 'status', 'actions'];
+  displayedColumns = ['no', 'user_id', 'title', 'description', 'status', 'actions'];
 
-  dataSource!: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -47,9 +42,12 @@ export class SupportComponent implements OnInit {
     public _cmnservice: CmnServiceService,
     private _authservice: AuthServiceService,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+
+    this.dataSource.sort = this.sort;
+
     this.getSupportData();
     this.viewMode = false;
     this._cmnservice.menuListIndex = 3;
@@ -86,19 +84,36 @@ export class SupportComponent implements OnInit {
       name: new FormControl(null),
     });
 
-    this.username.valueChanges.subscribe((res) => {
-      // console.log(res);
+    // this.username.valueChanges.subscribe((res) => {
+    //   // console.log(res);
 
-      if (this.username.value.name === '') {
-        window.location.reload();
+    //   if (this.username.value.name === '') {
+    //     window.location.reload();
+    //   }
+    //    else if (this.username.status === 'INVALID') {
+    //     return;
+    //   } 
+    //   else if (this.username.status === 'VALID') {
+    //     this.filterDataByKeyword(res.name);
+    //   }
+    // });
+
+    this.dataSource.sortingDataAccessor = (data: any, property) => {
+      console.log("DATA");
+      console.log(data);
+      switch (property) {
+        case 'user_id': return data.user_id;
+        case 'title': return data?.title;
+        case 'description': return data?.description;
+        case 'status': return data?.status;
+        default: return data[property];
       }
-       else if (this.username.status === 'INVALID') {
-        return;
-      } 
-      else if (this.username.status === 'VALID') {
-        this.filterDataByKeyword(res.name);
-      }
-    });
+    }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   data: any;
@@ -133,9 +148,9 @@ export class SupportComponent implements OnInit {
         this.supportData = this.rowdata.data;
         this.totalpage = this.rowdata.total;
         this.links = this.rowdata.links;
-        this.pageSize = this.rowdata.per_page;      
+        this.pageSize = this.rowdata.per_page;
         this.currentPage = this.rowdata.current_page;
-        
+
 
         let from = this.rowdata.from;
         let to = this.rowdata.to;
@@ -245,9 +260,9 @@ export class SupportComponent implements OnInit {
         this.supportData = this.rowdata.data;
         this.totalpage = this.rowdata.total;
         this.links = this.rowdata.links;
-        this.pageSize = this.rowdata.per_page;      
+        this.pageSize = this.rowdata.per_page;
         this.currentPage = this.rowdata.current_page;
-        
+
 
         let from = this.rowdata.from;
         let to = this.rowdata.to;
@@ -321,5 +336,6 @@ export class SupportComponent implements OnInit {
 
   onBackSupport() {
     this.viewMode = false;
+    this.ngOnInit();
   }
 }

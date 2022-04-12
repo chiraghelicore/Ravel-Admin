@@ -1,13 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { AuthServiceService } from '../services/authService/auth-service.service';
 import { HttpClient } from '@angular/common/http';
@@ -24,7 +19,8 @@ export class UsersComponent implements OnInit {
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  // @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort, {static: false}) sort!: MatSort;
 
   // VARIABLE DECLARATION -----------------------------------------------
   data: any;
@@ -45,19 +41,16 @@ export class UsersComponent implements OnInit {
   links:any[] = [];
   switchpage:any;
   inputvalue:string = '';
-
-  
-
   range !: FormGroup ;
   username!: FormGroup;
 
   displayedColumns = [
     'no',
-    'userid',
-    'name',
+    'id',
+    'first_name',
     'email',
     'mobile',
-    'currentamount',
+    'balance',
     'actions',
     'delete',
   ];
@@ -73,6 +66,9 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // this.usersData = new MatTableDataSource<any>();
+    this.dataSource.sort = this.sort;
+
     this.updateMode = false;
     this._cmnservice.menuListIndex = 1;
     this.getUsers();
@@ -102,9 +98,6 @@ export class UsersComponent implements OnInit {
         // console.log(res);
         let start_date = res.start;
         let end_date = res.end;
-
-       
-        
         
         if (this.range.status === 'INVALID') {
           return
@@ -114,35 +107,49 @@ export class UsersComponent implements OnInit {
           this.convertDate(start_date,end_date)
         }
         
-       
-        
     })
 
-    this.username.valueChanges.subscribe(
-      (res) => 
-      {
-        // console.log(res);
+    // this.username.valueChanges.subscribe(
+    //   (res) => 
+    //   {
+    //     // console.log(res);
       
-      if (this.username.value.name === '') {
-        window.location.reload();
-      }
+    //   if (this.username.value.name === '') {
+    //     window.location.reload();
+    //   }
 
-      else if (this.username.status === 'INVALID') { 
-        return;
-       }
+    //   else if (this.username.status === 'INVALID') { 
+    //     return;
+    //    }
        
-        else if (this.username.status === 'VALID') {
-          this.filterDataByKeyword(res);
-        }
+    //     else if (this.username.status === 'VALID') {
+    //       this.filterDataByKeyword(res);
+    //     }
         
         
+    //   }
+    // )
+
+    this.dataSource.sortingDataAccessor = (data: any, property) => {
+      console.log("DATA");
+      console.log(data);
+      switch (property) {
+          case 'id': return data.id;
+          case 'first_name': return data?.first_name;
+          case 'email': return data?.email;
+          case 'mobile': return data?.mobile;
+          case 'balance': return data?.balance;
+          default: return data[property];
       }
-    )
+    }
+
   }
-
-
-  
   // --------------------------------------------------------------------------------
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   // FUNCTIONS - METHODS --------------------------------------------------------
 
@@ -156,19 +163,22 @@ export class UsersComponent implements OnInit {
     if (startdate == null || enddate == null) {
       return;
     }
+
+    // if (event.value != undefined) {
+    //   filterValue = this.datepipe.transform(filterValue, 'M/d/yyyy');
+    //   console.log(filterValue);
+    // }
     
-    this.filterDataByDate(startdate, enddate);
+    // this.filterDataByDate(startdate, enddate);
   }
-
-
-  
-
-
 
   getUsers() {
 
     if (this.links.length >  0) {
-      this.http.get(this.links[this.switchpage].url).subscribe(
+      console.log(this.links);
+      console.log(this.links[this.switchpage]);
+      
+      this.http.get(this.links[this.switchpage]?.url).subscribe(
         (res) => {
           console.log("Current Page Data :- ", res);
           window.scroll(  0, -400);
@@ -214,6 +224,7 @@ export class UsersComponent implements OnInit {
        
         this.rowdata = res;
         this.usersData = this.rowdata.data;
+        console.log(this.usersData);
         console.table(this.usersData);
         this.currentPage = this.rowdata.current_page;
         this.links = this.rowdata.links;
@@ -244,13 +255,21 @@ export class UsersComponent implements OnInit {
              this.dataSource.paginator = this.paginator;
              console.log('datasource', this.dataSource);
      
-             this.dataSource.sort = this.sort;
+            //  this.dataSource.sort = this.sort;
   
   
         // console.log("link length :", this.links);
         // console.log("current page", this.currentPage);
         
-        
+        this.dataSource.paginator = this.paginator;
+          // this.transData.sort = this.sort;
+
+          setTimeout(
+            () =>
+                (this.dataSource.sort = this.sort),
+            10
+        );
+
       },  err => {console.log(err);
         this._cmnservice.showError(err.error.message);
       })
@@ -289,7 +308,6 @@ export class UsersComponent implements OnInit {
 
   cancelUpdateUser()
   {
-   
     this.updateMode = false;
   }
 
