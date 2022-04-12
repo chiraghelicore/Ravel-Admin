@@ -8,6 +8,13 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
+export interface MyFilter {
+  userName: string,
+    startDate: any,
+    endDate: any
+}
+
+
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.component.html',
@@ -38,6 +45,8 @@ export class TransactionComponent implements OnInit {
   inputvalue: string = '';
   range!: FormGroup;
   username!: FormGroup;
+
+  filteredValues: MyFilter = { userName: '', startDate: null, endDate: null };
 
   constructor(
     private _authservice: AuthServiceService,
@@ -75,15 +84,20 @@ export class TransactionComponent implements OnInit {
     });
 
     this.username.valueChanges.subscribe((res) => {
-      // console.log(res);
-      if (this.username.value.name === '') {
-        window.location.reload();
-      } else if (this.username.status === 'INVALID') {
-        return;
-      } else if (this.username.status === 'VALID') {
-        this.filterDataByKeyword(res.name);
-      }
+      console.log(res.name);
+      this.filteredValues['userName'] = res.name;
+      this.transData.filter = JSON.stringify(this.filteredValues);
     });
+    // this.username.valueChanges.subscribe((res) => {
+    //   // console.log(res);
+    //   if (this.username.value.name === '') {
+    //     window.location.reload();
+    //   } else if (this.username.status === 'INVALID') {
+    //     return;
+    //   } else if (this.username.status === 'VALID') {
+    //     this.filterDataByKeyword(res.name);
+    //   }
+    // });
 
     this._cmnservice.menuListIndex = 2;
 
@@ -94,11 +108,47 @@ export class TransactionComponent implements OnInit {
           case 'sendname': return data?.from_user?.first_name;
           case 'receivername': return data.to_user?.first_name;
           case 'updated_at': return data?.updated_at;
-          case 'amount': return data?.amount;
+          case 'currentamount': return data?.currentamount;
           default: return data[property];
       }
     }
+
+    this.transData.filterPredicate = this.customFilterPredicate();
+
+    // this.transData.filterPredicate = (data: any, filter: any) => !filter || filter.startDate < data.updated_at && filter.endDate > data.updated_at;
   }
+
+  
+  customFilterPredicate() {
+    return (data: any, filter: string): boolean => {
+
+        let searchString = JSON.parse(filter) as MyFilter;
+
+        if ((searchString.startDate && searchString.startDate !== '') && (searchString.endDate && searchString.endDate != '')) {
+
+            let formatedUpdateDate = data.updated_at;
+            formatedUpdateDate = this.datepipe.transform(data.updated_at, 'dd-MM-yyyy');
+
+            // (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) || 
+            // (data.to_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.toLowerCase()))
+            return (formatedUpdateDate > searchString.startDate) && (formatedUpdateDate < searchString.endDate) 
+          //   ||
+          //   (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) || 
+          // (data.to_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.toLowerCase()));
+
+        } else {
+          return (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) || 
+          (data.to_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.toLowerCase()))
+        }
+    }
+}
+
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.transData.filter = filterValue.trim().toLowerCase();
+
+  //   console.log(this.transData.filter  = filterValue.trim().toLowerCase());
+  // }
 
   convertDate(start: any, end: any) {
     let startdate = this.datepipe.transform(start, 'dd-MM-yyyy');
@@ -109,7 +159,27 @@ export class TransactionComponent implements OnInit {
       return;
     }
 
-    this.filterDataByDate(startdate, enddate);
+    console.log(this.dataSource);
+
+    // let filterData = {
+    //   "startDate": startdate,
+    //   "endDate": enddate
+    // }
+
+    this.filteredValues['startDate'] = startdate;
+    this.filteredValues['endDate'] = enddate;
+    
+    this.transData.filter = JSON.stringify(this.filteredValues);
+    // this.dataSource.filter = enddate;
+
+    console.log(this.transData.filter);
+
+
+    // this.transData.filterPredicate = (data, filter) => {
+    //   const dataStr = data?.updated_at > startdate? && ;
+    //   return dataStr.indexOf(filter) != -1; 
+    // }
+    // this.filterDataByDate(startdate, enddate);
   }
 
   filterDataByDate(start: any, end: any) {
@@ -179,9 +249,6 @@ export class TransactionComponent implements OnInit {
     } else {
       this._authservice.getTransactionDetails().subscribe(
         (res) => {
-          console.log("---------------------------------------");
-        console.log(res);
-        console.log("---------------------------------------");
           console.log('initial data :-', res);
           this.rowdata = res;
           window.scroll(0, -400);

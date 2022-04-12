@@ -21,18 +21,12 @@ export class LoginComponent implements OnInit {
   loginerror!:string;
   loginmode: boolean = true;
 
-
   ngOnInit(): void {
 
-
-
     this.loginform = new FormGroup({
-
       user: new FormControl('', Validators.required),
       password: new FormControl('', [Validators.required, Validators.minLength(7)])
-
     })
-
 
     this.signupform = new FormGroup({
       fname: new FormControl('', Validators.required),
@@ -47,7 +41,6 @@ export class LoginComponent implements OnInit {
   {
     this.loginmode = !this.loginmode;
   }
-
 
   onLogin(loginform:any)
   {
@@ -76,9 +69,7 @@ export class LoginComponent implements OnInit {
      
     );
     
-
     this.newItemEvent.emit(loginform.status);
-    
   }
 
 
@@ -101,8 +92,6 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('dashboard');
         this.signupform.reset();
       }
-    );
-    
+    ); 
   }
-
 }

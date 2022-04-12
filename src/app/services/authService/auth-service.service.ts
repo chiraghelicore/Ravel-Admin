@@ -12,15 +12,12 @@ export class AuthServiceService {
 
   public currentUserSubject!: BehaviorSubject<any>;
   public currentUser: Observable<any> | undefined;
-
   
   constructor(
     private http: HttpClient,
     private _cmnservice: CmnServiceService,
     private _errorservice: ErrorService
-  )
-  
-  {
+  ) {
     let user = sessionStorage.getItem('cu_');
     // console.log("In service -",this.currentUserSubject);
 
@@ -28,30 +25,20 @@ export class AuthServiceService {
       this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(user));
       this.currentUser = this.currentUserSubject.asObservable();
       // console.log("After Login -", this.currentUserSubject);
-      
     }
-  
     else {
       this.currentUserSubject = new BehaviorSubject<any>(null);
     }
   }
 
-
-
-
   public get currentUserValue() {
     if (this.currentUserSubject){ return this.currentUserSubject?.value};
   }
-
-
-
-  
 
 // SIGN UP REQUEST.......
   signUP(data: any) {
     return this.http.post(BASE_URL + 'admin/signup', data);
   }
-
 
 // SIGN IN REQUEST
   signIn(data: any) {
@@ -61,13 +48,10 @@ export class AuthServiceService {
         if (res) {
          
             sessionStorage.setItem('_cu', JSON.stringify(res));
-          
-          
 
           console.log("Login Res :-", res);
         }
         
-
         return res;
       }
       
@@ -78,9 +62,7 @@ export class AuthServiceService {
       })
     );
 
-   
   }
-
 
 // GET DASHBOARD DATA..
   getDashData()

@@ -9,15 +9,9 @@ import { CmnServiceService } from '../services/cmnService/cmn-service.service';
 })
 export class SideNavComponent implements OnInit {
   
-  
-
-  
   constructor(private _authservice: AuthServiceService, public _cmnservice: CmnServiceService) {}
 
-  ngOnInit(): void {
-
-
-  }
+  ngOnInit(): void {}
 
   logout()
   {
@@ -36,12 +30,8 @@ export class SideNavComponent implements OnInit {
           this._cmnservice.showError(err);
         }
       )
-    }
-
-    
+    } 
   }
-  
-
 
  sideNavSwitch()
  {
