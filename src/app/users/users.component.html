@@ -5,7 +5,7 @@
 <div *ngIf="updateMode === false">
   <p class="title">Users</p>
 
-  <div *ngIf="usersData; else noUsersData">
+  <div *ngIf="dataSource && dataSource.data.length > 0; else noUsersData">
   <div class="search-filter">
     <!-- <div class="search"></div> -->
     <mat-form-field [formGroup]="username" class="example-form-field search-container" appearance="fill">
@@ -192,7 +192,7 @@
 <ng-template #noUsersData>
   <div class="noUserDataClass">
     <div>
-      No Data Found for Transaction.
+      No Data Found for User.
     </div>
   </div>
 </ng-template>

@@ -306,11 +306,14 @@ export class UsersComponent implements OnInit {
       }
     )
 
+    window.location.reload();
+
   }
 
 
   cancelUpdateUser() {
     this.updateMode = false;
+    window.location.reload();
   }
 
   pageChanged(event: PageEvent) {

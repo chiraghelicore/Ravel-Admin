@@ -1,0 +1,36 @@
+<div>
+    
+    <h1 mat-dialog-title>
+        <b>View Details</b>
+    </h1>
+
+    <form class="viewform" [formGroup]="viewReactiveForm">
+
+        <div class="userid-view">
+          <label for="useerid"> User Id </label>
+          <input type="text" name="userid" id="userid" formControlName="userid">
+        </div>
+  
+        <div class="title-view">
+          <label for="title"> Title </label>
+          <input type="text" name="title" id="title" formControlName="title">
+        </div>
+  
+        <div class="error-view">
+          <label for="error"> Payment Error? </label>
+          <input type="text" name="error" id="error" formControlName="error">
+        </div>
+  
+        <div class="status-view">
+          <label for="useerid"> Status </label>
+          <mat-select formControlName="status">
+            <mat-option value="Pending">Pending</mat-option>
+            <mat-option value="Success">Complete</mat-option>
+          </mat-select>
+        </div>
+  
+        <button class="submit-btn" (click)="onSubmit(viewReactiveForm)"> SUBMIT </button>
+        <button class="cancel-btn" (click)="onBackSupport()"> BACK </button>
+  
+      </form>
+</div>

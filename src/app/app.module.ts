@@ -21,6 +21,7 @@ import { AuthguardGuard } from './guards/authguard.guard';
 import { DatePipe } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { SupportViewDialogComponent } from './support-view-dialog/support-view-dialog.component';
 
 
 
@@ -44,7 +45,8 @@ const appRoutes: Routes = [
     SupportComponent,
     HeaderComponent,
     LoginComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    SupportViewDialogComponent
   ],
   imports: [
     BrowserModule,

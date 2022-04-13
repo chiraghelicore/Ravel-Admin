@@ -7,6 +7,8 @@ import { CmnServiceService } from '../services/cmnService/cmn-service.service';
 import { AuthServiceService } from '../services/authService/auth-service.service';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { SupportViewDialogComponent } from '../support-view-dialog/support-view-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-support',
@@ -41,7 +43,8 @@ export class SupportComponent implements OnInit {
     public datepipe: DatePipe,
     public _cmnservice: CmnServiceService,
     private _authservice: AuthServiceService,
-    private http: HttpClient
+    private http: HttpClient,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -52,33 +55,33 @@ export class SupportComponent implements OnInit {
     this.viewMode = false;
     this._cmnservice.menuListIndex = 3;
 
-    this.viewReactiveForm = new FormGroup({
-      userid: new FormControl({ value: '', disabled: true }),
-      title: new FormControl({ value: '', disabled: true }),
-      error: new FormControl({ value: '', disabled: true }),
-      status: new FormControl(''),
-      category: new FormControl({ value: '', disabled: true }),
-      attachment: new FormControl({ value: '', disabled: true }),
-      trans_ref: new FormControl({ value: '', disabled: true }),
-    });
+    // this.viewReactiveForm = new FormGroup({
+    //   userid: new FormControl({ value: '', disabled: true }),
+    //   title: new FormControl({ value: '', disabled: true }),
+    //   error: new FormControl({ value: '', disabled: true }),
+    //   status: new FormControl(''),
+    //   category: new FormControl({ value: '', disabled: true }),
+    //   attachment: new FormControl({ value: '', disabled: true }),
+    //   trans_ref: new FormControl({ value: '', disabled: true }),
+    // });
 
     this.range = new FormGroup({
       start: new FormControl(),
       end: new FormControl(),
     });
 
-    this.range.valueChanges.subscribe((res) => {
-      // console.log(res);
+    // this.range.valueChanges.subscribe((res) => {
+    //   // console.log(res);
 
-      let start_date = res.start;
-      let end_date = res.end;
+    //   let start_date = res.start;
+    //   let end_date = res.end;
 
-      if (this.range.status === 'INVALID') {
-        return;
-      } else if (this.range.status === 'VALID') {
-        this.convertDate(start_date, end_date);
-      }
-    });
+    //   if (this.range.status === 'INVALID') {
+    //     return;
+    //   } else if (this.range.status === 'VALID') {
+    //     this.convertDate(start_date, end_date);
+    //   }
+    // });
 
     this.username = new FormGroup({
       name: new FormControl(null),
@@ -119,54 +122,54 @@ export class SupportComponent implements OnInit {
   data: any;
   viewMode = false;
 
-  convertDate(start: any, end: any) {
-    let startdate = this.datepipe.transform(start, 'dd-MM-yyyy');
-    let enddate = this.datepipe.transform(end, 'dd-MM-yyyy');
+  // convertDate(start: any, end: any) {
+  //   let startdate = this.datepipe.transform(start, 'dd-MM-yyyy');
+  //   let enddate = this.datepipe.transform(end, 'dd-MM-yyyy');
 
-    if (startdate == null || enddate == null) {
-      return;
-    }
+  //   if (startdate == null || enddate == null) {
+  //     return;
+  //   }
 
-    this.filterDataByDate(startdate, enddate);
-  }
+  //   this.filterDataByDate(startdate, enddate);
+  // }
 
-  filterDataByDate(start: any, end: any) {
-    if (this.range.status === 'INVALID') {
-      // console.log('Not Valid');
-      return;
-    }
+  // filterDataByDate(start: any, end: any) {
+  //   if (this.range.status === 'INVALID') {
+  //     // console.log('Not Valid');
+  //     return;
+  //   }
 
-    this.switchpage = 0;
+  //   this.switchpage = 0;
 
-    let data = { from_date: start, to_date: end };
-    // console.table(data);
+  //   let data = { from_date: start, to_date: end };
+  //   // console.table(data);
 
-    this._authservice.filterSupportData(data).subscribe(
-      (res) => {
-        console.log('filterdata by kw -', res);
-        this.rowdata = res;
-        this.supportData = this.rowdata.data;
-        this.totalpage = this.rowdata.total;
-        this.links = this.rowdata.links;
-        this.pageSize = this.rowdata.per_page;
-        this.currentPage = this.rowdata.current_page;
+  //   this._authservice.filterSupportData(data).subscribe(
+  //     (res) => {
+  //       console.log('filterdata by kw -', res);
+  //       this.rowdata = res;
+  //       this.supportData = this.rowdata.data;
+  //       this.totalpage = this.rowdata.total;
+  //       this.links = this.rowdata.links;
+  //       this.pageSize = this.rowdata.per_page;
+  //       this.currentPage = this.rowdata.current_page;
 
 
-        let from = this.rowdata.from;
-        let to = this.rowdata.to;
+  //       let from = this.rowdata.from;
+  //       let to = this.rowdata.to;
 
-        this.rowIndex = [];
+  //       this.rowIndex = [];
 
-        for (let index = from; index <= to; index++) {
-          this.rowIndex.push(index);
-        }
-      },
-      (err) => {
-        console.log(err);
-        this._cmnservice.showError(err.error.message);
-      }
-    );
-  }
+  //       for (let index = from; index <= to; index++) {
+  //         this.rowIndex.push(index);
+  //       }
+  //     },
+  //     (err) => {
+  //       console.log(err);
+  //       this._cmnservice.showError(err.error.message);
+  //     }
+  //   );
+  // }
 
   getSupportData() {
     // this._authservice.getSupportDetails().subscribe((res) =>
@@ -248,37 +251,37 @@ export class SupportComponent implements OnInit {
     this.getSupportData();
   }
 
-  filterDataByKeyword(keyword: any) {
-    // console.log('filter :-', keyword);
-    this.switchpage = 0;
+  // filterDataByKeyword(keyword: any) {
+  //   // console.log('filter :-', keyword);
+  //   this.switchpage = 0;
 
-    let data = { keyword: keyword };
-    this._authservice.filterSupportData(data).subscribe(
-      (res) => {
-        console.log('filterdata by kw -', res);
-        this.rowdata = res;
-        this.supportData = this.rowdata.data;
-        this.totalpage = this.rowdata.total;
-        this.links = this.rowdata.links;
-        this.pageSize = this.rowdata.per_page;
-        this.currentPage = this.rowdata.current_page;
+  //   let data = { keyword: keyword };
+  //   this._authservice.filterSupportData(data).subscribe(
+  //     (res) => {
+  //       console.log('filterdata by kw -', res);
+  //       this.rowdata = res;
+  //       this.supportData = this.rowdata.data;
+  //       this.totalpage = this.rowdata.total;
+  //       this.links = this.rowdata.links;
+  //       this.pageSize = this.rowdata.per_page;
+  //       this.currentPage = this.rowdata.current_page;
 
 
-        let from = this.rowdata.from;
-        let to = this.rowdata.to;
+  //       let from = this.rowdata.from;
+  //       let to = this.rowdata.to;
 
-        this.rowIndex = [];
+  //       this.rowIndex = [];
 
-        for (let index = from; index <= to; index++) {
-          this.rowIndex.push(index);
-        }
-      },
-      (err) => {
-        console.log(err);
-        this._cmnservice.showError(err.error.message);
-      }
-    );
-  }
+  //       for (let index = from; index <= to; index++) {
+  //         this.rowIndex.push(index);
+  //       }
+  //     },
+  //     (err) => {
+  //       console.log(err);
+  //       this._cmnservice.showError(err.error.message);
+  //     }
+  //   );
+  // }
 
   setInputValue(keyword: string) {
     this.inputvalue = keyword;
@@ -291,51 +294,67 @@ export class SupportComponent implements OnInit {
     window.location.reload();
   }
 
-
-
   openView(rowdata: any) {
     this.viewMode = true;
+    rowdata.status = this.status;
     console.log('rowdata :-', rowdata);
 
-    this.viewReactiveForm.setValue({
-      userid: rowdata.user_id,
-      title: rowdata.title,
-      error: rowdata.description,
-      category: rowdata.category,
-      attachment: rowdata.attachment,
-      trans_ref: rowdata.transaction_ref,
-      status: this.status,
-    });
-  }
-
-  onSubmit(viewReactiveForm: any) {
-    let data = {
-      category: this.viewReactiveForm.value.category,
-      title: this.viewReactiveForm.value.title,
-      description: this.viewReactiveForm.value.error,
-      transaction_ref: +this.viewReactiveForm.value.trans_ref,
-      attachment: this.viewReactiveForm.value.attachment,
-    };
-    console.log('form :-', viewReactiveForm);
-
-    console.log('submit data :-', data);
-
-    this._authservice.updateSupportData(data).subscribe(
-      (res) => {
-        console.log('Update success -', res);
-        this._cmnservice.showSuccess('Update Successfully');
-      },
-      (err) => {
-        this._cmnservice.showError(err.error.message);
-        console.log(err);
+    const dialogRef = this.dialog.open(
+      SupportViewDialogComponent,
+      {
+          autoFocus: false,
+          width: "32vw",
+          data: { element: rowdata }
       }
-    );
-    console.log('FormData :-', viewReactiveForm);
-    this.viewMode = false;
+  );
+
+  dialogRef.afterClosed().subscribe((result: any) => {
+      if (result === 'success') {
+        window.location.reload();
+      }
+
+  });
+
+    // this.viewReactiveForm.setValue({
+    //   userid: rowdata.user_id,
+    //   title: rowdata.title,
+    //   error: rowdata.description,
+    //   category: rowdata.category,
+    //   attachment: rowdata.attachment,
+    //   trans_ref: rowdata.transaction_ref,
+    //   status: this.status,
+    // });
   }
 
-  onBackSupport() {
-    this.viewMode = false;
-    this.ngOnInit();
-  }
+  // onSubmit(viewReactiveForm: any) {
+  //   let data = {
+  //     category: this.viewReactiveForm.value.category,
+  //     title: this.viewReactiveForm.value.title,
+  //     description: this.viewReactiveForm.value.error,
+  //     transaction_ref: +this.viewReactiveForm.value.trans_ref,
+  //     attachment: this.viewReactiveForm.value.attachment,
+  //   };
+  //   console.log('form :-', viewReactiveForm);
+
+  //   console.log('submit data :-', data);
+
+  //   this._authservice.updateSupportData(data).subscribe(
+  //     (res) => {
+  //       console.log('Update success -', res);
+  //       this._cmnservice.showSuccess('Update Successfully');
+  //     },
+  //     (err) => {
+  //       this._cmnservice.showError(err.error.message);
+  //       console.log(err);
+  //     }
+  //   );
+  //   console.log('FormData :-', viewReactiveForm);
+  //   this.viewMode = false;
+  //   window.location.reload();
+  // }
+
+  // onBackSupport() {
+  //   this.viewMode = false;
+  //   window.location.reload();
+  // }
 }
