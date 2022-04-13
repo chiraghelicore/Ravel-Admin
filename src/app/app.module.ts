@@ -22,6 +22,7 @@ import { DatePipe } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { SupportViewDialogComponent } from './support-view-dialog/support-view-dialog.component';
+import { UsersUpdateDialogComponent } from './users-update-dialog/users-update-dialog.component';
 
 
 
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     LoginComponent,
     ConfirmationDialogComponent,
-    SupportViewDialogComponent
+    SupportViewDialogComponent,
+    UsersUpdateDialogComponent
   ],
   imports: [
     BrowserModule,

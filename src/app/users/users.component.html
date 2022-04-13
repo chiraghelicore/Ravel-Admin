@@ -2,7 +2,8 @@
 <app-side-nav ></app-side-nav>
 <div class="body">
   <main>
-<div *ngIf="updateMode === false">
+<!-- <div *ngIf="updateMode === false"> -->
+  <div>
   <p class="title">Users</p>
 
   <div *ngIf="dataSource && dataSource.data.length > 0; else noUsersData">
@@ -116,7 +117,7 @@
 
 <!-- ------------------------------------------------------------------------------------- -->
 
-<div *ngIf="updateMode === true" class="updateBox">
+<!-- <div *ngIf="updateMode === true" class="updateBox">
   <p class="update-title">Users>Upgrade</p>
 
   <div class="update-form">
@@ -185,7 +186,7 @@
     <button class="user-update-btn" mat-stroked-button color="primary" (click) = "updateUser()"> Update </button>
     <button class="cancel-update-btn" mat-stroked-button (click) = "cancelUpdateUser()"> Back </button>
   </div>
-</div>
+</div> -->
 </main>
 </div>
 
