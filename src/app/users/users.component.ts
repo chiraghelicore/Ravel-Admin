@@ -10,6 +10,7 @@ import { DatePipe, Location } from '@angular/common';
 import { CmnServiceService } from '../services/cmnService/cmn-service.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UsersUpdateDialogComponent } from '../users-update-dialog/users-update-dialog.component';
 
 
 @Component({
@@ -76,14 +77,14 @@ export class UsersComponent implements OnInit {
     this._cmnservice.menuListIndex = 1;
     this.getUsers();
 
-    this.updateReactiveForm = new FormGroup({
-      firstname: new FormControl(''),
-      lastname: new FormControl(''),
-      email: new FormControl(''),
-      password: new FormControl(''),
-      mobile: new FormControl(''),
-      balance: new FormControl(),
-    });
+    // this.updateReactiveForm = new FormGroup({
+    //   firstname: new FormControl(''),
+    //   lastname: new FormControl(''),
+    //   email: new FormControl(''),
+    //   password: new FormControl(''),
+    //   mobile: new FormControl(''),
+    //   balance: new FormControl(),
+    // });
 
     this.range = new FormGroup({
       start: new FormControl([Validators.required]),
@@ -280,41 +281,41 @@ export class UsersComponent implements OnInit {
 
   }
 
-  updateUser() {
-    let updateUser = {
-      name:
-        this.updateReactiveForm.value.firstname +
-        ' ' +
-        this.updateReactiveForm.value.lastname,
-      email: this.updateReactiveForm.value.email,
-    };
+  // updateUser() {
+  //   let updateUser = {
+  //     name:
+  //       this.updateReactiveForm.value.firstname +
+  //       ' ' +
+  //       this.updateReactiveForm.value.lastname,
+  //     email: this.updateReactiveForm.value.email,
+  //   };
 
-    // console.log('update User Data :-', updateUser);
+  //   // console.log('update User Data :-', updateUser);
 
-    this._authservice.updateUser(updateUser).subscribe(
-      (res) => {
-        console.log("update status -", res);
-        this._cmnservice.showSuccess('User Update Successfully');
-        this.updateMode = false;
-      },
-      err => {
-        this._cmnservice.showError(err.error.data);
-        console.log("Error :-", err);
-
-
-
-      }
-    )
-
-    window.location.reload();
-
-  }
+  //   this._authservice.updateUser(updateUser).subscribe(
+  //     (res) => {
+  //       console.log("update status -", res);
+  //       this._cmnservice.showSuccess('User Update Successfully');
+  //       this.updateMode = false;
+  //     },
+  //     err => {
+  //       this._cmnservice.showError(err.error.data);
+  //       console.log("Error :-", err);
 
 
-  cancelUpdateUser() {
-    this.updateMode = false;
-    window.location.reload();
-  }
+
+  //     }
+  //   )
+
+  //   window.location.reload();
+
+  // }
+
+
+  // cancelUpdateUser() {
+  //   this.updateMode = false;
+  //   window.location.reload();
+  // }
 
   pageChanged(event: PageEvent) {
     console.log({ event });
@@ -428,19 +429,36 @@ export class UsersComponent implements OnInit {
   }
 
   openUpdate(rowdata: any) {
-    this.updateMode = true;
+    // this.updateMode = true;
     console.log('UserId :-', rowdata);
+    
 
-    this.updateReactiveForm.setValue({
-      firstname: rowdata.first_name,
-      balance: rowdata.balance,
-      email: rowdata.email,
-      mobile: rowdata.mobile,
-      lastname: rowdata.last_name,
-      password: '',
-    });
+    const dialogRef = this.dialog.open(
+      UsersUpdateDialogComponent,
+      {
+          autoFocus: false,
+          width: "57vw",
+          data: { element: rowdata }
+      }
+  );
 
-    console.log('Form :-', this.updateReactiveForm);
+  dialogRef.afterClosed().subscribe((result: any) => {
+      if (result === 'success') {
+        window.location.reload();
+      }
+
+  });
+
+    // this.updateReactiveForm.setValue({
+    //   firstname: rowdata.first_name,
+    //   balance: rowdata.balance,
+    //   email: rowdata.email,
+    //   mobile: rowdata.mobile,
+    //   lastname: rowdata.last_name,
+    //   password: '',
+    // });
+
+    // console.log('Form :-', this.updateReactiveForm);
   }
 
   deleteData(rowdata: any) {

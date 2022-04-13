@@ -1,0 +1,74 @@
+<div class="updateBox">
+    
+    <h1 mat-dialog-title>
+        <b>Update User</b>
+    </h1>
+  
+    <div class="update-form">
+      <form class="Reactiveform" [formGroup] = "updateReactiveForm">
+        <div class="form-left-side">
+          <div class="firstname">
+            <label for="first-name" class="form-label"> First Name </label>
+            <input
+              class="form-input"
+              type="text"
+              placeholder="Enter First Name"
+              formControlName = "firstname"
+            />
+          </div>
+          <div class="mobile">
+              <label for="Number" class="form-label"> Mobile Number </label>
+              <input
+                class="form-input"
+                type="number"
+                placeholder="Enter Mobile Number"
+                formControlName = "mobile"
+              />
+          </div>
+          <div class="password">
+              <label for="password" class="form-label"> Password </label>
+              <input
+                class="form-input"
+                type="password"
+                placeholder="Enter Password"
+                formControlName = "password"
+              />
+          </div>
+        </div>
+  
+        <div class="form-right-side">
+          <div class="lastname">
+              <label for="last-name" class="form-label"> Last Name </label>
+              <input
+                class="form-input"
+                type="text"
+                placeholder="Enter Last Name"
+                formControlName = "lastname"
+              />
+          </div>
+          <div class="email">
+              <label for="email" class="form-label"> Email </label>
+              <input
+                class="form-input"
+                type="email"
+                placeholder="Enter Email"
+                formControlName = "email"
+              />
+          </div>
+          <div class="totalbalance">
+              <label for="amount" class="form-label"> Total Balance </label>
+              <div
+                class="form-balance"
+                type="number"
+                
+              
+               > Rs.{{updateReactiveForm.value.balance | number}} </div>
+          </div>
+        </div>
+        
+      </form>
+      
+      <button class="user-update-btn" mat-stroked-button color="primary" (click) = "updateUser()"> Update </button>
+          <button class="cancel-update-btn" mat-stroked-button (click) = "cancelUpdateUser()"> Back </button>
+    </div>
+  </div>

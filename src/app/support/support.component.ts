@@ -295,7 +295,7 @@ export class SupportComponent implements OnInit {
   }
 
   openView(rowdata: any) {
-    this.viewMode = true;
+    // this.viewMode = true;
     rowdata.status = this.status;
     console.log('rowdata :-', rowdata);
 
