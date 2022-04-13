@@ -58,13 +58,16 @@ td {
 //   padding-bottom: 0px;
 // }
 .success {
-  background-color: rgba(27, 128, 31, 1);
-  color: white;
+  // background-color: rgba(27, 128, 31, 1);
+  // color: white;
+  color: rgba(27, 128, 31, 1);
 }
 
 .danger {
-  background-color: rgba(255, 0, 0, 1);
-  color: white;
+  // background-color: rgba(255, 0, 0, 1);
+  // color: white;
+
+  color: rgba(255, 0, 0, 1);
 }
 
 // .example-form-field {

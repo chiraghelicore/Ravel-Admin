@@ -164,42 +164,42 @@ export class TransactionComponent implements OnInit {
     this.transData.filter = JSON.stringify(this.filteredValues);
   }
 
-  filterDataByDate(start: any, end: any) {
-    if (this.range.status === 'INVALID') {
-      // console.log('Not Valid');
-      return;
-    }
+  // filterDataByDate(start: any, end: any) {
+  //   if (this.range.status === 'INVALID') {
+  //     // console.log('Not Valid');
+  //     return;
+  //   }
 
-    this.switchpage = 0;
+  //   this.switchpage = 0;
 
-    let data = { from_date: start, to_date: end };
+  //   let data = { from_date: start, to_date: end };
 
-    this._authservice.filterTransaction(data).subscribe(
-      (res) => {
-        console.log('filterdata by kw -', res);
-        this.rowdata = res;
-        this.transData = this.rowdata.data;
-        this.totalpage = this.rowdata.total;
-        this.links = this.rowdata.links;
-        this.pageSize = this.rowdata.per_page;      
-        this.currentPage = this.rowdata.current_page;
+  //   this._authservice.filterTransaction(data).subscribe(
+  //     (res) => {
+  //       console.log('filterdata by kw -', res);
+  //       this.rowdata = res;
+  //       this.transData = this.rowdata.data;
+  //       this.totalpage = this.rowdata.total;
+  //       this.links = this.rowdata.links;
+  //       this.pageSize = this.rowdata.per_page;      
+  //       this.currentPage = this.rowdata.current_page;
         
 
-        let from = this.rowdata.from;
-        let to = this.rowdata.to;
+  //       let from = this.rowdata.from;
+  //       let to = this.rowdata.to;
 
-        this.rowIndex = [];
+  //       this.rowIndex = [];
 
-        for (let index = from; index <= to; index++) {
-          this.rowIndex.push(index);
-        }
-      },
-      (err) => {
-        console.log(err);
-        this._cmnservice.showError(err.error.message);
-      }
-    );
-  }
+  //       for (let index = from; index <= to; index++) {
+  //         this.rowIndex.push(index);
+  //       }
+  //     },
+  //     (err) => {
+  //       console.log(err);
+  //       this._cmnservice.showError(err.error.message);
+  //     }
+  //   );
+  // }
 
   getTransactionDetails() {
     if (this.links.length > 0) {

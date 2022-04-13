@@ -8,6 +8,8 @@ import { AuthServiceService } from '../services/authService/auth-service.service
 import { HttpClient } from '@angular/common/http';
 import { DatePipe, Location } from '@angular/common';
 import { CmnServiceService } from '../services/cmnService/cmn-service.service';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -20,7 +22,7 @@ export class UsersComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   // @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatSort, {static: false}) sort!: MatSort;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
 
   // VARIABLE DECLARATION -----------------------------------------------
   data: any;
@@ -38,10 +40,10 @@ export class UsersComponent implements OnInit {
   next_page_url: any;
   prev_page_url: any;
   rowIndex: number[] = [];
-  links:any[] = [];
-  switchpage:any;
-  inputvalue:string = '';
-  range !: FormGroup ;
+  links: any[] = [];
+  switchpage: any;
+  inputvalue: string = '';
+  range !: FormGroup;
   username!: FormGroup;
 
   displayedColumns = [
@@ -52,7 +54,7 @@ export class UsersComponent implements OnInit {
     'mobile',
     'balance',
     'actions',
-    'delete',
+    // 'delete',
   ];
 
   //-----------------------------------------------------------------------------
@@ -62,8 +64,9 @@ export class UsersComponent implements OnInit {
     private _authservice: AuthServiceService,
     private _location: Location,
     public _cmnservice: CmnServiceService,
-    public datepipe: DatePipe
-  ) {}
+    public datepipe: DatePipe,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     // this.usersData = new MatTableDataSource<any>();
@@ -88,32 +91,31 @@ export class UsersComponent implements OnInit {
     })
 
     this.username = new FormGroup({
-      name : new FormControl(null, Validators.required)
+      name: new FormControl(null, Validators.required)
     })
 
     this.range.valueChanges.subscribe(
-      (res) => 
-      {
-        
+      (res) => {
+
         // console.log(res);
         let start_date = res.start;
         let end_date = res.end;
-        
+
         if (this.range.status === 'INVALID') {
           return
         }
 
         else if (this.range.status === 'VALID') {
-          this.convertDate(start_date,end_date)
+          this.convertDate(start_date, end_date)
         }
-        
-    })
+
+      })
 
     // this.username.valueChanges.subscribe(
     //   (res) => 
     //   {
     //     // console.log(res);
-      
+
     //   if (this.username.value.name === '') {
     //     window.location.reload();
     //   }
@@ -121,12 +123,12 @@ export class UsersComponent implements OnInit {
     //   else if (this.username.status === 'INVALID') { 
     //     return;
     //    }
-       
+
     //     else if (this.username.status === 'VALID') {
     //       this.filterDataByKeyword(res);
     //     }
-        
-        
+
+
     //   }
     // )
 
@@ -134,12 +136,12 @@ export class UsersComponent implements OnInit {
       console.log("DATA");
       console.log(data);
       switch (property) {
-          case 'id': return data.id;
-          case 'first_name': return data?.first_name;
-          case 'email': return data?.email;
-          case 'mobile': return data?.mobile;
-          case 'balance': return data?.balance;
-          default: return data[property];
+        case 'id': return data.id;
+        case 'first_name': return data?.first_name;
+        case 'email': return data?.email;
+        case 'mobile': return data?.mobile;
+        case 'balance': return data?.balance;
+        default: return data[property];
       }
     }
 
@@ -154,11 +156,10 @@ export class UsersComponent implements OnInit {
   // FUNCTIONS - METHODS --------------------------------------------------------
 
 
-  convertDate(start:any,end:any)
-  {
-    let startdate = this.datepipe.transform(start,'dd-MM-yyyy');
-    let enddate = this.datepipe.transform(end,'dd-MM-yyyy');
-    
+  convertDate(start: any, end: any) {
+    let startdate = this.datepipe.transform(start, 'dd-MM-yyyy');
+    let enddate = this.datepipe.transform(end, 'dd-MM-yyyy');
+
 
     if (startdate == null || enddate == null) {
       return;
@@ -168,67 +169,23 @@ export class UsersComponent implements OnInit {
     //   filterValue = this.datepipe.transform(filterValue, 'M/d/yyyy');
     //   console.log(filterValue);
     // }
-    
+
     // this.filterDataByDate(startdate, enddate);
   }
 
   getUsers() {
 
-    if (this.links.length >  0) {
+    if (this.links.length > 0) {
       console.log(this.links);
       console.log(this.links[this.switchpage]);
-      
+
       this.http.get(this.links[this.switchpage]?.url).subscribe(
         (res) => {
           console.log("Current Page Data :- ", res);
-          window.scroll(  0, -400);
+          window.scroll(0, -400);
           this.rowdata = res;
           this.usersData = this.rowdata.data;
 
-           // To fill dummy image, where img is null
-           for (let index = 0; index < this.usersData.length; index++) {
-            if (this.usersData[index].profile_pic === null) {
-              this.usersData[index].profile_pic =
-                '../../assets/png/profileimg.png';
-            }
-          }
-  
-          this.totalpage = this.rowdata.total;
-          this.currentPage = this.rowdata.current_page;
-          this.pageSize = this.rowdata.per_page;
-  
-           let from = this.rowdata.from;
-          let to = this.rowdata.to;
-  
-          this.rowIndex = [];
-  
-          for (let index = from; index <= to; index++) {
-            this.rowIndex.push(index);
-          }
-  
-         
-        },
-        err => {console.log(err);
-          this._cmnservice.showError(err.error.message);
-        }
-      );
-
-    }
-
-
-    else{
-
-      this._authservice.getUsers().subscribe((res) => {
-        console.log('initial data :-', res);
-        window.scroll(  0, -400);
-       
-        this.rowdata = res;
-        this.usersData = this.rowdata.data;
-        console.log(this.usersData);
-        console.table(this.usersData);
-        this.currentPage = this.rowdata.current_page;
-        this.links = this.rowdata.links;
-        
           // To fill dummy image, where img is null
           for (let index = 0; index < this.usersData.length; index++) {
             if (this.usersData[index].profile_pic === null) {
@@ -236,41 +193,87 @@ export class UsersComponent implements OnInit {
                 '../../assets/png/profileimg.png';
             }
           }
-  
+
+          this.totalpage = this.rowdata.total;
+          this.currentPage = this.rowdata.current_page;
+          this.pageSize = this.rowdata.per_page;
+
+          let from = this.rowdata.from;
+          let to = this.rowdata.to;
+
+          this.rowIndex = [];
+
+          for (let index = from; index <= to; index++) {
+            this.rowIndex.push(index);
+          }
+
+
+        },
+        err => {
+          console.log(err);
+          this._cmnservice.showError(err.error.message);
+        }
+      );
+
+    }
+
+
+    else {
+
+      this._authservice.getUsers().subscribe((res) => {
+        console.log('initial data :-', res);
+        window.scroll(0, -400);
+
+        this.rowdata = res;
+        this.usersData = this.rowdata.data;
+        console.log(this.usersData);
+        console.table(this.usersData);
+        this.currentPage = this.rowdata.current_page;
+        this.links = this.rowdata.links;
+
+        // To fill dummy image, where img is null
+        for (let index = 0; index < this.usersData.length; index++) {
+          if (this.usersData[index].profile_pic === null) {
+            this.usersData[index].profile_pic =
+              '../../assets/png/profileimg.png';
+          }
+        }
+
         this.totalpage = this.rowdata.total;
         this.currentPage = this.rowdata.current_page;
         this.pageSize = this.rowdata.per_page;
-  
-         let from = this.rowdata.from;
+
+        let from = this.rowdata.from;
         let to = this.rowdata.to;
-  
+
         this.rowIndex = [];
-  
+
         for (let index = from; index <= to; index++) {
           this.rowIndex.push(index);
         }
-  
-             // For Pagination
-             this.dataSource = new MatTableDataSource<any>(this.usersData);
-             this.dataSource.paginator = this.paginator;
-             console.log('datasource', this.dataSource);
-     
-            //  this.dataSource.sort = this.sort;
-  
-  
+
+        // For Pagination
+        this.dataSource = new MatTableDataSource<any>(this.usersData);
+        this.dataSource.paginator = this.paginator;
+        console.log('datasource', this.dataSource);
+
+        //  this.dataSource.sort = this.sort;
+
+
         // console.log("link length :", this.links);
         // console.log("current page", this.currentPage);
-        
-        this.dataSource.paginator = this.paginator;
-          // this.transData.sort = this.sort;
 
-          setTimeout(
-            () =>
-                (this.dataSource.sort = this.sort),
-            10
+        this.dataSource.paginator = this.paginator;
+        // this.transData.sort = this.sort;
+
+        setTimeout(
+          () =>
+            (this.dataSource.sort = this.sort),
+          10
         );
 
-      },  err => {console.log(err);
+      }, err => {
+        console.log(err);
         this._cmnservice.showError(err.error.message);
       })
     }
@@ -290,25 +293,27 @@ export class UsersComponent implements OnInit {
 
     this._authservice.updateUser(updateUser).subscribe(
       (res) => {
-        console.log("update status -",res);
+        console.log("update status -", res);
         this._cmnservice.showSuccess('User Update Successfully');
         this.updateMode = false;
-    },
+      },
       err => {
         this._cmnservice.showError(err.error.data);
         console.log("Error :-", err);
 
-        
-        
+
+
       }
     )
+
+    window.location.reload();
 
   }
 
 
-  cancelUpdateUser()
-  {
+  cancelUpdateUser() {
     this.updateMode = false;
+    window.location.reload();
   }
 
   pageChanged(event: PageEvent) {
@@ -321,18 +326,17 @@ export class UsersComponent implements OnInit {
     // console.log("filter :-", keyword);
     this.switchpage = 0;
 
-    let data = {keyword: keyword.name}
+    let data = { keyword: keyword.name }
     this._authservice.filterUser(data).subscribe(
-      (res) => 
-      {
+      (res) => {
         console.log('filterdata by kw -', res);
         this.rowdata = res;
         this.usersData = this.rowdata.data;
         this.totalpage = this.rowdata.total;
         this.links = this.rowdata.links;
-        this.pageSize = this.rowdata.per_page;      
+        this.pageSize = this.rowdata.per_page;
         this.currentPage = this.rowdata.current_page;
-        
+
 
         let from = this.rowdata.from;
         let to = this.rowdata.to;
@@ -342,25 +346,25 @@ export class UsersComponent implements OnInit {
         for (let index = from; index <= to; index++) {
           this.rowIndex.push(index);
         }
-        
-           // To fill dummy image, where img is null
-           for (let index = 0; index < this.usersData.length; index++) {
-            if (this.usersData[index].profile_pic === null) {
-              this.usersData[index].profile_pic =
-                '../../assets/png/profileimg.png';
-            }
+
+        // To fill dummy image, where img is null
+        for (let index = 0; index < this.usersData.length; index++) {
+          if (this.usersData[index].profile_pic === null) {
+            this.usersData[index].profile_pic =
+              '../../assets/png/profileimg.png';
           }
-  
- 
+        }
+
+
       },
-      err => {console.log(err);
+      err => {
+        console.log(err);
         this._cmnservice.showError(err.error.message);
       }
     )
   }
 
-  filterDataByDate(start:any,end:any)
-  {
+  filterDataByDate(start: any, end: any) {
 
     if (this.range.status === 'INVALID') {
       // console.log('Not Valid');
@@ -369,22 +373,21 @@ export class UsersComponent implements OnInit {
 
     this.switchpage = 0;
 
-   
 
-      let data = {from_date: start, to_date: end}
-      console.table(data);
 
-      this._authservice.filterUser(data).subscribe(
-      (res) => 
-      {
+    let data = { from_date: start, to_date: end }
+    console.table(data);
+
+    this._authservice.filterUser(data).subscribe(
+      (res) => {
         console.log('filterdata by date -', res);
         this.rowdata = res;
         this.usersData = this.rowdata.data;
         this.totalpage = this.rowdata.total;
         this.links = this.rowdata.links;
-        this.pageSize = this.rowdata.per_page;      
+        this.pageSize = this.rowdata.per_page;
         this.currentPage = this.rowdata.current_page;
-        
+
 
         let from = this.rowdata.from;
         let to = this.rowdata.to;
@@ -394,35 +397,33 @@ export class UsersComponent implements OnInit {
         for (let index = from; index <= to; index++) {
           this.rowIndex.push(index);
         }
-        
-          // To fill dummy image, where img is null
-          for (let index = 0; index < this.usersData.length; index++) {
-            if (this.usersData[index].profile_pic === null) {
-              this.usersData[index].profile_pic =
-                '../../assets/png/profileimg.png';
-            }
+
+        // To fill dummy image, where img is null
+        for (let index = 0; index < this.usersData.length; index++) {
+          if (this.usersData[index].profile_pic === null) {
+            this.usersData[index].profile_pic =
+              '../../assets/png/profileimg.png';
           }
-  
-  
-      
+        }
+
+
+
       },
       err => {
         console.log(err);
         this._cmnservice.showError(err.error.message);
       }
-      )
+    )
   }
 
-  setInputValue(keyword:string)
-  {
+  setInputValue(keyword: string) {
     this.inputvalue = keyword;
   }
 
-  clearInput()
-  {
+  clearInput() {
     this.inputvalue = "";
     // console.log("clear");
-    
+
     window.location.reload();
   }
 
@@ -447,16 +448,32 @@ export class UsersComponent implements OnInit {
 
     console.log("Delet Data :-", rowdata);
 
-    let data = {user_id: rowdata.id};
+    let data = { user_id: rowdata.id };
 
-    this._authservice.deleteUser(data).subscribe(
-      (res) => {console.log("delete status -",res);},
-      err => {console.log(err);
-        this._cmnservice.showError(err.error.message);
+    const dialogRef = this.dialog.open(
+      ConfirmationDialogComponent,
+      {
+        autoFocus: false,
+        width: "475px",
+        data: {
+          title: `Delete Confirmation`,
+          message: `Are you Sure want to delete user '${rowdata.first_name}' with Email id '${rowdata.email}' ?`
+        }
       }
     );
-    
 
-    console.log('finish delete function');
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this._authservice.deleteUser(data).subscribe(
+          (res) => { console.log("delete status -", res); },
+          err => {
+            console.log(err);
+            this._cmnservice.showError(err.error.message);
+          }
+        );
+        console.log('finish delete function');
+      }
+    });
   }
 }
