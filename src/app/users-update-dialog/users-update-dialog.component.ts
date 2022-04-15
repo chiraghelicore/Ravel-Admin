@@ -30,8 +30,8 @@ export class UsersUpdateDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<UsersUpdateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
       dialogRef.disableClose = true;
-      this.updateReactiveForm.get('firstname')?.setValue(data.element.firstname);
-      this.updateReactiveForm.get('lastname')?.setValue(data.element.lastname);
+      this.updateReactiveForm.get('firstname')?.setValue(data.element.first_name);
+      this.updateReactiveForm.get('lastname')?.setValue(data.element.last_name);
       this.updateReactiveForm.get('email')?.setValue(data.element.email);
       this.updateReactiveForm.get('password')?.setValue(data.element.password);
       this.updateReactiveForm.get('mobile')?.setValue(data.element.mobile);
