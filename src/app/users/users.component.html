@@ -1,25 +1,28 @@
-<app-header  ></app-header>
-<app-side-nav ></app-side-nav>
+<ngx-ui-loader *ngIf="isLoading"></ngx-ui-loader>
+
+<app-header></app-header>
+<app-side-nav></app-side-nav>
 <div class="body">
   <main>
-<!-- <div *ngIf="updateMode === false"> -->
-  <div>
-  <p class="title">Users</p>
+    <div class="container-fluid">
 
-  <div *ngIf="dataSource && dataSource.data.length > 0; else noUsersData">
-  <div class="search-filter">
-    <!-- <div class="search"></div> -->
-    <mat-form-field [formGroup]="username" class="example-form-field search-container" appearance="fill">
-    
-      <input formControlName = "name" matInput type="text" placeholder="Search"
-      autocomplete="off" (keyup)="applyFilter($event)"
-       >
-      <button *ngIf="inputvalue" matSuffix mat-icon-button aria-label="Clear" (click)="clearInput()">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
+      <!-- <div *ngIf="updateMode === false"> -->
+      <div>
+        <p class="title">Users</p>
 
-    <!-- <div class="date-filter">
+        <div *ngIf="dataSource && dataSource.data.length > 0; else noUsersData">
+          <div class="search-filter">
+            <!-- <div class="search"></div> -->
+            <mat-form-field [formGroup]="username" class="example-form-field search-container" appearance="fill">
+
+              <input formControlName="name" matInput type="text" placeholder="Search" autocomplete="off"
+                (keyup)="applyFilter($event)">
+              <button *ngIf="inputvalue" matSuffix mat-icon-button aria-label="Clear" (click)="clearInput()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <!-- <div class="date-filter">
     
       
         <mat-form-field  appearance="fill">
@@ -36,88 +39,91 @@
       
     </div> -->
 
-  </div>
-  <div class="user-table">
-    <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
-      <ng-container matColumnDef="no">
-        <th mat-header-cell *matHeaderCellDef>No.</th>
-        <td mat-cell *matCellDef="let i = index">{{ rowIndex[i] }}</td>
-      </ng-container>
+          </div>
+          <div class="user-table table-responsive">
+            <table mat-table matSort [dataSource]="dataSource" class=" mat-elevation-z8">
+              <ng-container matColumnDef="no">
+                <th mat-header-cell *matHeaderCellDef>No.</th>
+                <td mat-cell *matCellDef="let i = index">{{ i + 1 }}</td>
+              </ng-container>
 
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header >UserId</th>
-        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-      </ng-container>
+              <!-- <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>UserId</th>
+              <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+            </ng-container> -->
 
-      <ng-container matColumnDef="first_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-        <td mat-cell *matCellDef="let element" style="text-align: left;"> 
-          <img src={{element.profile_pic}} alt="error"> 
-          <div style="display: inline-block; margin-left: 5px;">{{ element.first_name  }}</div>
-        </td>
-      </ng-container>
+              <ng-container matColumnDef="first_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                <td mat-cell *matCellDef="let element" style="text-align: left;">
+                  <img src={{element.profile_pic}} alt="error">
+                  <div style="display: inline-block; margin-left: 5px;">{{ element.first_name }}</div>
+                </td>
+              </ng-container>
 
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header >Email</th>
-        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-      </ng-container>
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+              </ng-container>
 
-      <ng-container matColumnDef="mobile">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile Number</th>
-        <td mat-cell *matCellDef="let element">{{ element.mobile }}</td>
-      </ng-container>
+              <ng-container matColumnDef="mobile">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile Number</th>
+                <td mat-cell *matCellDef="let element">{{ element.mobile }}</td>
+              </ng-container>
 
-      <ng-container matColumnDef="balance">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header >
-          Current Amount
-        </th>
-        <td  mat-cell *matCellDef="let element">{{ element.balance }}</td>
-      </ng-container>
+              <ng-container matColumnDef="balance">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Current Amount
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.balance }}</td>
+              </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <th style="text-align: center;" mat-header-cell *matHeaderCellDef>Action</th>
-        <td style="text-align: center;" mat-cell *matCellDef="let row">
-          <button mat-icon-button aria-label="Update" class="success" (click)="openUpdate(row)" matTooltip="Update">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <!-- <button mat-stroked-button class="success" (click)="openUpdate(row)">
+              <ng-container matColumnDef="actions">
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef>Action</th>
+                <td style="text-align: center;" mat-cell *matCellDef="let row">
+                  <button mat-icon-button aria-label="Update" class="success" (click)="openUpdate(row)"
+                    matTooltip="Edit">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <!-- <button mat-stroked-button class="success" (click)="openUpdate(row)">
             Update
           </button> -->
-          
-        <!-- </td> -->
-      <!-- </ng-container>
+
+                  <!-- </td> -->
+                  <!-- </ng-container>
 
       <ng-container matColumnDef="delete"> -->
-        <!-- <th mat-header-cell *matHeaderCellDef>Delete</th> -->
-        <!-- <td mat-cell *matCellDef="let row"> -->
-          <!-- <button mat-stroked-button class="danger" (click)="deleteData(row)">Delete</button> -->
+                  <!-- <th mat-header-cell *matHeaderCellDef>Delete</th> -->
+                  <!-- <td mat-cell *matCellDef="let row"> -->
+                  <!-- <button mat-stroked-button class="danger" (click)="deleteData(row)">Delete</button> -->
 
-          <button mat-icon-button aria-label="Delete" class="danger" (click)="deleteData(row)" matTooltip="Delete">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+                  <button mat-icon-button aria-label="Delete" class="danger" (click)="deleteData(row)"
+                    matTooltip="Delete">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
 
-      <tr  mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-    <mat-paginator
-      #paginator
-      [length]="totalpage"
-       [pageSize]="pageSize"
-     
-      aria-label="Select page"
-      (page)="pageChanged($event)"
-    >
-    </mat-paginator>
-  </div>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <mat-paginator #paginator [length]="totalpage" [pageSize]="pageSize" aria-label="Select page"
+              (page)="pageChanged($event)">
+            </mat-paginator>
+          </div>
 
-</div>
-</div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noUsersData>
+      <div *ngIf="!isLoading" class="noUserDataParentClass">
+        <div class="noUserDataClass">
+          No Data Found for User.
+        </div>
+      </div>
+    </ng-template>
+    <!-- ------------------------------------------------------------------------------------- -->
 
-<!-- ------------------------------------------------------------------------------------- -->
-
-<!-- <div *ngIf="updateMode === true" class="updateBox">
+    <!-- <div *ngIf="updateMode === true" class="updateBox">
   <p class="update-title">Users>Upgrade</p>
 
   <div class="update-form">
@@ -187,13 +193,5 @@
     <button class="cancel-update-btn" mat-stroked-button (click) = "cancelUpdateUser()"> Back </button>
   </div>
 </div> -->
-</main>
+  </main>
 </div>
-
-<ng-template #noUsersData>
-  <div class="noUserDataClass">
-    <div>
-      No Data Found for User.
-    </div>
-  </div>
-</ng-template>

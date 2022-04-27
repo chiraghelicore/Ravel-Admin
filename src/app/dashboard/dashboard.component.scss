@@ -4,7 +4,7 @@
   align-items: $al-it;
 }
 
-@mixin flex-align{
+@mixin flex-align {
   display: flex;
 }
 
@@ -22,16 +22,17 @@ $font-clr : #171717;
   letter-spacing: 0.85px;
   color: $font-clr;
   opacity: 0.5;
-  margin-left: 18ch;
+  margin-left: 20ch;
   margin-bottom: 0px;
 }
 
 .dashboard-data {
-  @include flex-btwn(space-evenly,flex-start);
+  @include flex-btwn(space-evenly, flex-start);
   flex-direction: column;
   width: 100%;
   height: auto;
   margin: auto;
+  padding-bottom: 20px;
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -56,7 +57,7 @@ $font-clr : #171717;
     margin: 15px;
 
     .items {
-      @include flex-btwn(space-around,center);
+      @include flex-btwn(space-around, center);
 
       width: 26ch;
       height: 100%;
@@ -71,7 +72,7 @@ $font-clr : #171717;
       .data {
         @include flex-align();
         flex-direction: column;
-        margin: auto;
+        margin: auto auto auto 10px;
 
         .num-data {
           font-family: "Manrope", sans-serif;
@@ -139,7 +140,7 @@ $font-clr : #171717;
   top: 437px;
   left: 240px;
   padding: 18px;
-  margin-left: 27ch;
+  margin-left: 29ch;
   margin-top: 5ch;
 
   .databar {
@@ -151,7 +152,7 @@ $font-clr : #171717;
       @include flex-btwn(space-between, center);
       flex-direction: column;
       align-items: flex-start;
-      
+
       width: 111.95px;
       height: 43.85px;
 
@@ -182,15 +183,15 @@ $font-clr : #171717;
     }
 
     .chart-months {
-     @include flex-btwn(space-between, center);
+      @include flex-btwn(space-between, center);
       width: 200px;
       margin-right: 15px;
 
       .indicator {
-        @include flex-btwn(center,flex-start);
+        @include flex-btwn(center, flex-start);
         flex-direction: column;
         justify-content: center;
-       
+
 
         .chart-info {
           font-family: "Roboto", sans-serif;
@@ -222,17 +223,23 @@ $font-clr : #171717;
     top: 20%;
     flex-wrap: wrap;
     margin-bottom: 5ch;
-    margin-left: 2ch;
+    margin-left: 12ch;
+    // margin-left: 2ch;
+    width: auto;
+
+    .grid-item {
+      .items {
+        width: auto;
+
+      }
+    }
   }
 
-  .title {
-    margin-left: 2ch;
-  }
 }
 
 @media (max-width: 950px) {
   .chart {
-    width: 95%;
+    width: 90%;
     height: 345.2px;
     background: #ffffff;
     box-shadow: 0px 12.7812px 42.6042px rgb(160 163 189 / 20%);
@@ -242,9 +249,48 @@ $font-clr : #171717;
     left: 240px;
     padding: 18px;
     margin-left: 2ch;
+    margin-right: 2ch;
 
     .databar {
-      width: 90%;
+      width: 87%;
+    }
+
+    .title {
+      margin-left: 10ch;
+      margin-right: auto;
     }
   }
+}
+
+@media (max-width: 767.98px) {
+  .title {
+    margin-left: 8ch;
+    margin-right: auto;
+  }
+
+
+}
+
+@media (max-width: 575.98px) {
+  .title {
+    margin-left: 2ch;
+    margin-right: auto;
+  }
+
+  .grid-container {
+    margin-left: 0ch;
+    margin-right: 1ch;
+
+    .grid-item {
+      .items {
+        width: auto;
+
+      }
+    }
+  }
+
+  .icon {
+    margin-left: 12px;
+  }
+
 }

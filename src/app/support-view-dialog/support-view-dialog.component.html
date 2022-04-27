@@ -1,36 +1,84 @@
-<div>
-    
-    <h1 mat-dialog-title>
-        <b>View Details</b>
-    </h1>
+<!-- <div>
 
-    <form class="viewform" [formGroup]="viewReactiveForm">
+  <h1 mat-dialog-title>
+    <b>View Details</b>
+  </h1>
 
-        <div class="userid-view">
-          <label for="useerid"> User Id </label>
-          <input type="text" name="userid" id="userid" formControlName="userid">
-        </div>
-  
-        <div class="title-view">
-          <label for="title"> Title </label>
-          <input type="text" name="title" id="title" formControlName="title">
-        </div>
-  
-        <div class="error-view">
-          <label for="error"> Payment Error? </label>
-          <input type="text" name="error" id="error" formControlName="error">
-        </div>
-  
-        <div class="status-view">
-          <label for="useerid"> Status </label>
-          <mat-select formControlName="status">
-            <mat-option value="Pending">Pending</mat-option>
-            <mat-option value="Success">Complete</mat-option>
-          </mat-select>
-        </div>
-  
-        <button class="submit-btn" (click)="onSubmit(viewReactiveForm)"> SUBMIT </button>
-        <button class="cancel-btn" (click)="onBackSupport()"> BACK </button>
-  
-      </form>
+  <form class="viewform" [formGroup]="viewReactiveForm">
+
+    <div class="userid-view">
+      <label for="useerid"> User Id </label>
+      <input type="text" name="userid" id="userid" formControlName="userid">
+    </div>
+
+    <div class="title-view">
+      <label for="title"> Title </label>
+      <input type="text" name="title" id="title" formControlName="title">
+    </div>
+
+    <div class="error-view">
+      <label for="error"> Payment Error? </label>
+      <input type="text" name="error" id="error" formControlName="error">
+    </div>
+
+    <div class="status-view">
+      <label for="useerid"> Status </label>
+      <mat-select formControlName="status">
+        <mat-option value="Pending">Pending</mat-option>
+        <mat-option value="Success">Complete</mat-option>
+      </mat-select>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button class="submit-btn" (click)="onSubmit(viewReactiveForm)"> SUBMIT </button>
+      <button class="cancel-btn" (click)="onBackSupport()"> BACK </button>
+    </div>
+
+
+  </form>
+</div> -->
+
+
+
+
+<div tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">View Details</h5>
+        <button type="button" class="btn-close" (click)="onBackSupport()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="viewReactiveForm">
+
+          <div class="mb-3">
+            <label for="useerid" class="col-form-label"> User Id </label>
+            <input class="form-control" type="text" name="userid" id="userid" formControlName="userid">
+          </div>
+
+          <div class="mb-3">
+            <label for="title" class="col-form-label"> Title </label>
+            <input class="form-control" type="text" name="title" id="title" formControlName="title">
+          </div>
+
+          <div class="mb-3">
+            <label for="error" class="col-form-label"> Payment Error? </label>
+            <input class="form-control" type="text" name="error" id="error" formControlName="error">
+          </div>
+
+          <div class="mb-3">
+            <label for="useerid" class="col-form-label"> Status </label>
+            <mat-select class="form-control" formControlName="status">
+              <mat-option value="Pending">Pending</mat-option>
+              <mat-option value="Success">Complete</mat-option>
+            </mat-select>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onBackSupport()">BACK</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmit(viewReactiveForm)">SUBMIT</button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,3 +1,8 @@
+.body {
+
+  padding: 5% 0% 5% 16%;
+}
+
 ::ng-deep table.mat-table {
   width: 100%;
 }
@@ -26,7 +31,8 @@
   // font-size: 14px;
   // line-height: 140%;
   // font-family: "Inter", sans-serif;
-  color: rgba(25, 39, 75, 1);;
+  color: rgba(25, 39, 75, 1);
+  ;
 }
 
 
@@ -221,11 +227,83 @@ mat-header-cell {
   color: #767676;
 }
 
+.noSupportDataParentClass {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .noSupportDataClass {
   height: 48px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   background: #eff0f6;
-  margin-top: 20%;
+  // margin-top: 20%;
   font-weight: 600;
   font-family: "Manrope", sans-serif;
+  margin-right: 1.0rem;
+}
+
+
+@media (max-width: 991.98px) {
+  .body {
+    padding: 8% 2% 0% 4%;
+  }
+
+  .noSupportDataClass {
+    margin-right: 0rem;
+  }
+}
+
+
+
+
+
+@media (max-width: 767.98px) {
+  table th {
+    font-size: 2.4vw;
+  }
+
+  .noSupportDataClass {
+    margin-right: 0rem;
+  }
+
+  .body {
+    padding: 8% 0% 0% 1%;
+  }
+}
+
+
+@media (max-width: 575.98px) {
+
+  .body {
+    padding: 8% 3% 0% 5%;
+  }
+
+  table td img {
+    width: 20px;
+    height: 20px;
+  }
+
+  table td button {
+    margin-left: 9px;
+    width: 10px;
+  }
+
+  table td button .mat-icon {
+    font-size: 16px;
+  }
+
+  .mat-cell {
+    font-size: 8px;
+  }
+
+  .noSupportDataClass {
+    margin-right: 0rem;
+  }
+
 }

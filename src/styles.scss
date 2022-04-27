@@ -1,6 +1,6 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use "@angular/material" as mat;
+@use "@angular/material"as mat;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -8,6 +8,8 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 @import "~ngx-toastr/toastr";
+
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
@@ -20,15 +22,11 @@ $ravel-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$ravel-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $ravel-primary,
+$ravel-theme: mat.define-light-theme((color: (primary: $ravel-primary,
       accent: $ravel-accent,
       warn: $ravel-warn,
     ),
-  )
-);
+  ));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -50,13 +48,13 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
 }
 
 .body {
-  padding-top: 70px;
-  padding-left: 235px;
+  padding: 5% 1% 0% 16%;
   width: 98vw;
   height: auto;
 }
@@ -64,7 +62,6 @@ body {
 .title {
   width: 169px;
   height: 29px;
-
   font-family: "Manrope", sans-serif;
   font-weight: bold;
   font-size: 20.45px;
@@ -72,6 +69,10 @@ body {
   letter-spacing: 0.85px;
   color: #171717;
   opacity: 0.5;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: transparent !important;
 }
 
 .search-filter {
@@ -165,11 +166,6 @@ body {
   }
 }
 
-@media (max-width: 950px) {
-  .body {
-    padding-left: 35px;
-  }
-}
 
 .logoutmenu {
   display: flex;
@@ -178,9 +174,9 @@ body {
   margin-top: 28.23px;
   margin-left: 20px;
 }
+
 .logout {
-  filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg)
-    brightness(95%) contrast(0%);
+  filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(0%);
 
   width: 20px;
   height: 20px;
@@ -188,8 +184,7 @@ body {
 
 .logoutmenu:hover {
   img {
-    filter: invert(203%) sepia(26%) saturate(2000%) hue-rotate(232deg)
-      brightness(500%) contrast(500%);
+    filter: invert(203%) sepia(26%) saturate(2000%) hue-rotate(232deg) brightness(500%) contrast(500%);
   }
 
   .logout-span {
@@ -206,4 +201,24 @@ body {
   color: #ffffff;
   opacity: 0.5;
   margin-left: 10.65px;
+}
+
+
+@media (max-width: 991.98px) {
+  .body {
+     padding: 8% 0% 0% 1%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .body {
+    padding-right: 0%;
+  }
+
+}
+
+@media (max-width: 575.98px) {
+
+  
+
 }

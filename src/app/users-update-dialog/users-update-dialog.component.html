@@ -1,4 +1,4 @@
-<div class="updateBox">
+<!-- <div class="updateBox">
     
     <h1 mat-dialog-title>
         <b>Update User</b>
@@ -70,5 +70,67 @@
       
       <button class="user-update-btn" mat-stroked-button color="primary" (click) = "updateUser()"> Update </button>
           <button class="cancel-update-btn" mat-stroked-button (click) = "cancelUpdateUser()"> Back </button>
+    </div>
+  </div> -->
+
+
+
+
+<div tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update User</h5>
+        <button type="button" class="btn-close" (click)="cancelUpdateUser()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <form [formGroup]="updateReactiveForm">
+          <!-- <div class="form-left-side"> -->
+          <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="mb-3">
+                <label for="first-name" class="col-form-label"> First Name </label>
+                <input class="form-control" type="text" placeholder="Enter First Name" formControlName="firstname" />
+              </div>
+              <div class="mb-3">
+                <label for="Number" class="col-form-label"> Mobile Number </label>
+                <input class="form-control" type="number" placeholder="Enter Mobile Number" formControlName="mobile" />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="col-form-label"> Password </label>
+                <input class="form-control" type="password" placeholder="Enter Password" formControlName="password" />
+              </div>
+            </div>
+
+            <!-- </div> -->
+            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <!-- <div class="form-right-side"> -->
+              <div class="mb-3">
+                <label for="last-name" class="col-form-label"> Last Name </label>
+                <input class="form-control" type="text" placeholder="Enter Last Name" formControlName="lastname" />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="col-form-label"> Email </label>
+                <input class="form-control" type="email" placeholder="Enter Email" formControlName="email" />
+              </div>
+              <div class="mb-3">
+                <label for="amount" class="col-form-label"> Total Balance </label>
+                <div class="form-control" type="number" style="background: lightblue;">
+                  Rs.{{updateReactiveForm.value.balance | number}} </div>
+              </div>
+              <!-- </div> -->
+            </div>
+          </div>
+        </form>
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cancelUpdateUser()">BACK</button>
+          <button type="button" class="btn btn-primary" (click)="updateUser()">UPDATE</button>
+        </div>
+      </div>
     </div>
   </div>

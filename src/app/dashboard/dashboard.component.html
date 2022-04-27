@@ -1,113 +1,115 @@
-<app-header  ></app-header>
-<app-side-nav ></app-side-nav>
+<ngx-ui-loader *ngIf="isLoading"></ngx-ui-loader>
+
+<app-header></app-header>
+<app-side-nav></app-side-nav>
 
 <!-- ------------------------------------------------------------------------------------------------------ -->
+
 <div class="dashboard-data">
   <p class="title">Dashboard</p>
-<div class="grid-container">
-  <div class="grid-item">
-    <div class="items">
-      <div class="icon">
-        <img src="../../assets/png/Group 10.png" alt="img" />
-      </div>
-      <div class="data">
-        <div class="num-data">{{car_papers_count}}</div>
-        <div class="data-name">Car Papers Count</div>
-      
-      </div>
-    </div>
-  </div>
-  <div class="grid-item">
-    <div class="items">
-      <div class="icon">
-        <img src="../../assets/png/Group 11.png" alt="img" />
-      </div>
-      <div class="data">
-        <div class="num-data">{{total_ghana_wallet_amount}}</div>
-        <div class="data-name">Total Ghana Wallet Amount</div>
-      
+  <div class="grid-container">
+    <div class="grid-item">
+      <div class="items">
+        <div class="icon">
+          <img src="../../assets/png/Group 10.png" alt="img" />
+        </div>
+        <div class="data">
+          <div class="num-data">{{car_papers_count}}</div>
+          <div class="data-name">Car Papers Count</div>
+
+        </div>
       </div>
     </div>
-  </div>
-  <div class="grid-item">
-    <div class="items">
-      <div class="icon">
-        <img src="../../assets/png/Group 12.png" alt="img" />
+    <div class="grid-item">
+      <div class="items">
+        <div class="icon">
+          <img src="../../assets/png/Group 11.png" alt="img" />
+        </div>
+        <div class="data">
+          <div class="num-data">{{total_ghana_wallet_amount}}</div>
+          <div class="data-name">Total Ghana Wallet Amount</div>
+
+        </div>
       </div>
-      <div class="data">
-        <div class="num-data">{{total_nigeria_wallet_amount}}</div>
-        <div class="data-name">Total Nigeria Wallet Amount</div>
-      
+    </div>
+    <div class="grid-item">
+      <div class="items">
+        <div class="icon">
+          <img src="../../assets/png/Group 12.png" alt="img" />
+        </div>
+        <div class="data">
+          <div class="num-data">{{total_nigeria_wallet_amount}}</div>
+          <div class="data-name">Total Nigeria Wallet Amount</div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-item">
+      <div class="items">
+        <div class="icon">
+          <img src="../../assets/png/Group 10.png" alt="img" />
+        </div>
+        <div class="data">
+          <div class="num-data">{{total_transactions}}</div>
+          <div class="data-name">Total Transactions</div>
+
+        </div>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="items">
+        <div class="icon">
+          <img src="../../assets/png/Group 11.png" alt="img" />
+        </div>
+        <div class="data">
+          <div class="num-data">{{total_users}}</div>
+          <div class="data-name">Total Users</div>
+
+        </div>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="items">
+        <div class="icon">
+          <img src="../../assets/png/Group 12.png" alt="img" />
+        </div>
+        <div class="data">
+          <div class="num-data">{{total_wallet_amount}}</div>
+          <div class="data-name">Total Wallet Amount</div>
+
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="grid-item">
-    <div class="items">
-      <div class="icon">
-        <img src="../../assets/png/Group 10.png" alt="img" />
+  <div class="chart">
+    <div class="databar">
+      <div class="chart-title">
+        <span class="title-name"> Visitor statistics </span>
+        <span class="subtitle"> Nov - July </span>
       </div>
-      <div class="data">
-        <div class="num-data">{{total_transactions}}</div>
-        <div class="data-name">Total Transactions</div>
-     
-      </div>
-    </div>
-  </div>
-  <div class="grid-item">
-    <div class="items">
-      <div class="icon">
-        <img src="../../assets/png/Group 11.png" alt="img" />
-      </div>
-      <div class="data">
-        <div class="num-data">{{total_users}}</div>
-        <div class="data-name">Total Users</div>
-      
-      </div>
-    </div>
-  </div>
-  <div class="grid-item">
-    <div class="items">
-      <div class="icon">
-        <img src="../../assets/png/Group 12.png" alt="img" />
-      </div>
-      <div class="data">
-        <div class="num-data">{{total_wallet_amount}}</div>
-        <div class="data-name">Total Wallet Amount</div>
-      
-      </div>
-    </div>
-  </div>
-</div>
+      <div class="chart-months">
+        <div class="indicator">
+          <p>
+            <img src="../../assets/png/blue-dot.png" alt="bl" />
+            <span class="chart-info"> Last 6 months </span>
+          </p>
 
-<div class="chart">
-  <div class="databar">
-    <div class="chart-title">
-      <span class="title-name"> Visitor statistics </span>
-      <span class="subtitle"> Nov - July </span>
-    </div>
-    <div class="chart-months">
-      <div class="indicator">
-        <p>
-          <img src="../../assets/png/blue-dot.png" alt="bl" />
-          <span class="chart-info"> Last 6 months </span>
-        </p>
+          <span class="chart-num"> 475 273 </span>
+        </div>
 
-        <span class="chart-num"> 475 273 </span>
-      </div>
-
-      <div class="indicator">
-        <p>
+        <div class="indicator">
+          <p>
             <img src="../../assets/png/green-dot.png" alt="bl" />
             <span class="chart-info"> Previous </span>
           </p>
 
-          <span class="chart-num"> 782 396  </span>
+          <span class="chart-num"> 782 396 </span>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
 
 <!-- ------------------------------------------------------------------------------------------------------ -->
-

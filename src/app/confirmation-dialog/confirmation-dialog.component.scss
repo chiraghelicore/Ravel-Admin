@@ -1,23 +1,47 @@
 .yes-btn {
     border-radius: 3px;
-    background-color :#00AB66;
+    background-color: #00AB66;
 }
+
 .no-btn {
     border-radius: 3px;
-    background-color : #DB5841
+    background-color: #DB5841
 }
+
 .mat-dialog-content {
     text-align: inherit;
     font-family: "Inter", sans-serif;
 }
+
 .yes-btn:hover {
     border-radius: 3px;
-    background-color : #009150;
+    background-color: #009150;
 }
+
 .no-btn:hover {
     border-radius: 3px;
-    background-color : #D03D33;
+    background-color: #D03D33;
 }
-.yes-btn {
-    margin-left: 67%;
+
+.mat-dialog-actions {
+    flex-wrap: nowrap;
+    justify-content: end;
 }
+
+::ng-deep .mat-dialog-container {
+    padding: 0 24px !important;
+}
+
+@media (max-width: 575.98px) {}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) {
+    ::ng-deep .mat-dialog-container {
+        padding: 12px !important;
+    }
+
+
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {}

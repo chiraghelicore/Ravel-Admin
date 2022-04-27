@@ -47,9 +47,11 @@ export class UsersComponent implements OnInit {
   range !: FormGroup;
   username!: FormGroup;
 
+  isLoading: boolean = false;
+
   displayedColumns = [
     'no',
-    'id',
+    // 'id',
     'first_name',
     'email',
     'mobile',
@@ -67,7 +69,9 @@ export class UsersComponent implements OnInit {
     public _cmnservice: CmnServiceService,
     public datepipe: DatePipe,
     public dialog: MatDialog
-  ) { }
+  ) {
+    this.isLoading = true;
+  }
 
   ngOnInit(): void {
     // this.usersData = new MatTableDataSource<any>();
@@ -176,6 +180,8 @@ export class UsersComponent implements OnInit {
 
   getUsers() {
 
+    // console.log(this.isLoading);
+
     if (this.links.length > 0) {
       console.log(this.links);
       console.log(this.links[this.switchpage]);
@@ -208,11 +214,16 @@ export class UsersComponent implements OnInit {
             this.rowIndex.push(index);
           }
 
-
+          this.isLoading = false;
         },
         err => {
           console.log(err);
-          this._cmnservice.showError(err.error.message);
+          if (err && err.error && err.error.message) {
+            this._cmnservice.showError(err.error.message);
+          } else {
+            this._cmnservice.showError("Something went wrong");
+          }
+          this.isLoading = false;
         }
       );
 
@@ -273,9 +284,16 @@ export class UsersComponent implements OnInit {
           10
         );
 
+        this.isLoading = false;
+
       }, err => {
         console.log(err);
-        this._cmnservice.showError(err.error.message);
+        if (err && err.error && err.error.message) {
+          this._cmnservice.showError(err.error.message);
+        } else {
+          this._cmnservice.showError("Something went wrong");
+        }
+        this.isLoading = false;
       })
     }
 
@@ -318,9 +336,11 @@ export class UsersComponent implements OnInit {
   // }
 
   pageChanged(event: PageEvent) {
+    this.isLoading = true;
     console.log({ event });
     this.switchpage = event.pageIndex + 1;
     this.getUsers();
+    this.isLoading = false;
   }
 
   filterDataByKeyword(keyword: any) {
@@ -360,7 +380,11 @@ export class UsersComponent implements OnInit {
       },
       err => {
         console.log(err);
-        this._cmnservice.showError(err.error.message);
+        if (err && err.error && err.error.message) {
+          this._cmnservice.showError(err.error.message);
+        } else {
+          this._cmnservice.showError("Something went wrong");
+        }
       }
     )
   }
@@ -412,7 +436,11 @@ export class UsersComponent implements OnInit {
       },
       err => {
         console.log(err);
-        this._cmnservice.showError(err.error.message);
+        if (err && err.error && err.error.message) {
+          this._cmnservice.showError(err.error.message);
+        } else {
+          this._cmnservice.showError("Something went wrong");
+        }
       }
     )
   }
@@ -431,23 +459,23 @@ export class UsersComponent implements OnInit {
   openUpdate(rowdata: any) {
     // this.updateMode = true;
     console.log('UserId :-', rowdata);
-    
+
 
     const dialogRef = this.dialog.open(
       UsersUpdateDialogComponent,
       {
-          autoFocus: false,
-          width: "57vw",
-          data: { element: rowdata }
+        autoFocus: false,
+        // width: "57vw",
+        data: { element: rowdata }
       }
-  );
+    );
 
-  dialogRef.afterClosed().subscribe((result: any) => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       if (result === 'success') {
         window.location.reload();
       }
 
-  });
+    });
 
     // this.updateReactiveForm.setValue({
     //   firstname: rowdata.first_name,
@@ -487,7 +515,11 @@ export class UsersComponent implements OnInit {
           (res) => { console.log("delete status -", res); },
           err => {
             console.log(err);
-            this._cmnservice.showError(err.error.message);
+            if (err && err.error && err.error.message) {
+              this._cmnservice.showError(err.error.message);
+            } else {
+              this._cmnservice.showError("Something went wrong");
+            }
           }
         );
         console.log('finish delete function');
