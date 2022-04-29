@@ -1,9 +1,12 @@
+.body {
+  padding: 5% 0% 5% 16%;
+}
+
 ::ng-deep table.mat-table {
   width: 100%;
 }
 
-::ng-depp td.mat-cell
-{
+::ng-depp td.mat-cell {
   text-align: center;
   font-family: "Inter", sans-serif;
 }
@@ -16,10 +19,12 @@
   line-height: 140%;
   color: #767676;
 }
+
 .mat-header-row {
   color: black;
   background-color: #EFF0F1;
 }
+
 ::ng-deep tr.mat-header-row {
   background: #eff0f6;
   font-family: sans-serif;
@@ -28,15 +33,18 @@
   line-height: 140%;
   color: #767676;
 }
+
 mat-header-cell {
-  display:flex;
-  justify-content:flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
+
 ::ng-deep .mat-sort-header-container {
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
   font-weight: bold;
 }
+
 .mat-cell {
   text-align: center;
 }
@@ -49,9 +57,19 @@ mat-header-cell {
   position: absolute;
   right: 55px;
   top: 8px;
+
 }
 
-@media (max-width: 950px) {
+.search-filter mat-form-field {
+  padding: 0 !important;
+}
+
+@media (max-width: 991.98px) {
+
+  .body {
+    padding: 8% 2% 0% 4%;
+  }
+
   .transaction-table {
     left: 35px;
     z-index: -50;
@@ -65,22 +83,85 @@ mat-header-cell {
     left: 35px;
     margin-bottom: 25px;
   }
+
+  .noTrasDataClass {
+    margin-right: 0rem;
+  }
 }
+
 ::ng-deep tr.mat-cell {
   font-family: sans-serif;
   font-size: 13px;
   line-height: 140%;
   color: #767676;
 }
-.mat-row:hover{
+
+.mat-row:hover {
   background-color: #F5F5F5;
+}
+
+.noTransDataParentClass {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .noTrasDataClass {
   height: 48px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   background: #eff0f6;
-  margin-top: 20%;
+  // margin-top: 20%;
   font-weight: 600;
   font-family: "Manrope", sans-serif;
+  margin-right: 1.0rem;
+}
+
+@media (max-width: 767.98px) {
+  table th {
+    font-size: 2.4vw;
+  }
+
+  .body {
+    padding: 8% 0% 0% 1%;
+  }
+
+  .noTrasDataClass {
+    margin-right: 0rem;
+  }
+
+}
+
+@media (max-width: 575.98px) {
+
+
+  .body {
+    padding: 8% 3% 0% 5%;
+  }
+
+  table td img {
+    width: 20px;
+    height: 20px;
+  }
+
+  table td button {
+    margin-left: 9px;
+    width: 10px;
+  }
+
+  table td button .mat-icon {
+    font-size: 16px;
+  }
+
+  .mat-cell {
+    font-size: 8px;
+  }
+
+  .noTrasDataClass {
+    margin-right: 0rem;
+  }
 }

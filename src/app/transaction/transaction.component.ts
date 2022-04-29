@@ -10,8 +10,8 @@ import { DatePipe } from '@angular/common';
 
 export interface MyFilter {
   userName: string,
-    startDate: any,
-    endDate: any
+  startDate: any,
+  endDate: any
 }
 
 
@@ -46,6 +46,8 @@ export class TransactionComponent implements OnInit {
   range!: FormGroup;
   username!: FormGroup;
 
+  isLoading: boolean = false;
+
   filteredValues: MyFilter = { userName: '', startDate: null, endDate: null };
 
   constructor(
@@ -53,12 +55,14 @@ export class TransactionComponent implements OnInit {
     public _cmnservice: CmnServiceService,
     private http: HttpClient,
     public datepipe: DatePipe
-  ) {}
+  ) {
+    this.isLoading = true;
+  }
 
   ngOnInit(): void {
 
     this.transData.sort = this.sort;
-    
+
     // this.storedata();
     this.getTransactionDetails();
 
@@ -104,12 +108,12 @@ export class TransactionComponent implements OnInit {
 
     this.transData.sortingDataAccessor = (data, property) => {
       switch (property) {
-          case 'no': return data.index;
-          case 'sendname': return data?.from_user?.first_name;
-          case 'receivername': return data.to_user?.first_name;
-          case 'updated_at': return data?.updated_at;
-          case 'currentamount': return data?.currentamount;
-          default: return data[property];
+        case 'no': return data.index;
+        case 'sendname': return data?.from_user?.first_name;
+        case 'receivername': return data.to_user?.first_name;
+        case 'updated_at': return data?.updated_at;
+        case 'currentamount': return data?.currentamount;
+        default: return data[property];
       }
     }
 
@@ -118,30 +122,30 @@ export class TransactionComponent implements OnInit {
     // this.transData.filterPredicate = (data: any, filter: any) => !filter || filter.startDate < data.updated_at && filter.endDate > data.updated_at;
   }
 
-  
+
   customFilterPredicate() {
     return (data: any, filter: string): boolean => {
 
-        let searchString = JSON.parse(filter) as MyFilter;
+      let searchString = JSON.parse(filter) as MyFilter;
 
-        if ((searchString.startDate && searchString.startDate !== '') && (searchString.endDate && searchString.endDate != '')) {
+      if ((searchString.startDate && searchString.startDate !== '') && (searchString.endDate && searchString.endDate != '')) {
 
-            let formatedUpdateDate = data.updated_at;
-            formatedUpdateDate = this.datepipe.transform(data.updated_at, 'dd-MM-yyyy');
+        let formatedUpdateDate = data.updated_at;
+        formatedUpdateDate = this.datepipe.transform(data.updated_at, 'dd-MM-yyyy');
 
-            // (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) || 
-            // (data.to_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.toLowerCase()))
-            return (formatedUpdateDate > searchString.startDate) && (formatedUpdateDate < searchString.endDate) 
-          //   ||
-          //   (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) || 
-          // (data.to_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.toLowerCase()));
+        // (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) || 
+        // (data.to_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.toLowerCase()))
+        return (formatedUpdateDate > searchString.startDate) && (formatedUpdateDate < searchString.endDate)
+        //   ||
+        //   (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) || 
+        // (data.to_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.toLowerCase()));
 
-        } else {
-          return (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) || 
+      } else {
+        return (data.from_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.trim().toLowerCase())) ||
           (data.to_user?.first_name.toString().trim().toLowerCase().startsWith(searchString.userName.toLowerCase()))
-        }
+      }
     }
-}
+  }
 
   // applyFilter(event: Event) {
   //   const filterValue = (event.target as HTMLInputElement).value;
@@ -160,7 +164,7 @@ export class TransactionComponent implements OnInit {
     }
     this.filteredValues['startDate'] = startdate;
     this.filteredValues['endDate'] = enddate;
-    
+
     this.transData.filter = JSON.stringify(this.filteredValues);
   }
 
@@ -183,7 +187,7 @@ export class TransactionComponent implements OnInit {
   //       this.links = this.rowdata.links;
   //       this.pageSize = this.rowdata.per_page;      
   //       this.currentPage = this.rowdata.current_page;
-        
+
 
   //       let from = this.rowdata.from;
   //       let to = this.rowdata.to;
@@ -222,15 +226,23 @@ export class TransactionComponent implements OnInit {
           for (let index = from; index <= to; index++) {
             this.rowIndex.push(index);
           }
+
+          this.isLoading = false;
         },
         (err) => {
           console.log(err);
-          this._cmnservice.showError(err.error.message);
+          if (err && err.error && err.error.message) {
+            this._cmnservice.showError(err.error.message);
+          } else {
+            this._cmnservice.showError("Something went wrong");
+          }
+          this.isLoading = false;
         }
       );
     } else {
       this._authservice.getTransactionDetails().subscribe(
         (res) => {
+          this.isLoading = false;
           console.log('initial data :-', res);
           this.rowdata = res;
           window.scroll(0, -400);
@@ -255,26 +267,34 @@ export class TransactionComponent implements OnInit {
           this.dataSource = new MatTableDataSource<any>(this.transData.data);
           // this.dataSource.paginator = this.paginator;
           // this.dataSource.sort = this.sort
-          
+
 
           this.transData.paginator = this.paginator;
           this.transData.sort = this.sort;
 
           setTimeout(
             () =>
-                (this.transData.sort = this.sort),
+              (this.transData.sort = this.sort),
             10
-        );
+          );
+
+          this.isLoading = false;
         },
         (err) => {
           console.log(err);
-          this._cmnservice.showError(err.error.message);
+          if (err && err.error && err.error.message) {
+            this._cmnservice.showError(err.error.message);
+          } else {
+            this._cmnservice.showError("Something went wrong");
+          }
+          this.isLoading = false;
         }
       );
     }
   }
 
   pageChanged(event: PageEvent) {
+
     console.log({ event });
     this.switchpage = event.pageIndex + 1;
 
@@ -293,9 +313,9 @@ export class TransactionComponent implements OnInit {
         this.transData = this.rowdata.data;
         this.totalpage = this.rowdata.total;
         this.links = this.rowdata.links;
-        this.pageSize = this.rowdata.per_page;      
+        this.pageSize = this.rowdata.per_page;
         this.currentPage = this.rowdata.current_page;
-        
+
 
         let from = this.rowdata.from;
         let to = this.rowdata.to;
@@ -308,7 +328,11 @@ export class TransactionComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this._cmnservice.showError(err.error.message);
+        if (err && err.error && err.error.message) {
+          this._cmnservice.showError(err.error.message);
+        } else {
+          this._cmnservice.showError("Something went wrong");
+        }
       }
     );
   }
@@ -324,5 +348,5 @@ export class TransactionComponent implements OnInit {
     window.location.reload();
   }
 
- 
+
 }

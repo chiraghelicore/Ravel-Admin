@@ -25,22 +25,22 @@ export class SupportViewDialogComponent implements OnInit {
     trans_ref: new FormControl({ value: '', disabled: true }),
   });
 
-  
+
   constructor(
     private _authservice: AuthServiceService,
     public _cmnservice: CmnServiceService,
     public dialogRef: MatDialogRef<SupportViewDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
-      dialogRef.disableClose = true;
-      this.viewReactiveForm.get('userid')?.setValue(data.element.user_id);
-      this.viewReactiveForm.get('title')?.setValue(data.element.title);
-      this.viewReactiveForm.get('error')?.setValue(data.element.description);
-      this.viewReactiveForm.get('status')?.setValue(data.element.status);
-      this.viewReactiveForm.get('category')?.setValue(data.element.category);
-      // this.viewReactiveForm.get('description')?.setValue(data.element.description);
-      this.viewReactiveForm.get('attachment')?.setValue(data.element.attachment);
-      this.viewReactiveForm.get('transaction_ref')?.setValue(data.element.transaction_ref);
-    }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    dialogRef.disableClose = true;
+    this.viewReactiveForm.get('userid')?.setValue(data.element.user.first_name + " " + data.element.user.last_name);
+    this.viewReactiveForm.get('title')?.setValue(data.element.title);
+    this.viewReactiveForm.get('error')?.setValue(data.element.description);
+    this.viewReactiveForm.get('status')?.setValue(data.element.status);
+    this.viewReactiveForm.get('category')?.setValue(data.element.category);
+    // this.viewReactiveForm.get('description')?.setValue(data.element.description);
+    this.viewReactiveForm.get('attachment')?.setValue(data.element.attachment);
+    this.viewReactiveForm.get('transaction_ref')?.setValue(data.element.transaction_ref);
+  }
 
   ngOnInit() {
   }

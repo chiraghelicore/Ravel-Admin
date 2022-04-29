@@ -28,15 +28,15 @@ export class UsersUpdateDialogComponent implements OnInit {
     private _authservice: AuthServiceService,
     public _cmnservice: CmnServiceService,
     public dialogRef: MatDialogRef<UsersUpdateDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
-      dialogRef.disableClose = true;
-      this.updateReactiveForm.get('firstname')?.setValue(data.element.first_name);
-      this.updateReactiveForm.get('lastname')?.setValue(data.element.last_name);
-      this.updateReactiveForm.get('email')?.setValue(data.element.email);
-      this.updateReactiveForm.get('password')?.setValue(data.element.password);
-      this.updateReactiveForm.get('mobile')?.setValue(data.element.mobile);
-      this.updateReactiveForm.get('balance')?.setValue(data.element.balance);
-    }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    dialogRef.disableClose = true;
+    this.updateReactiveForm.get('firstname')?.setValue(data?.element?.first_name);
+    this.updateReactiveForm.get('lastname')?.setValue(data?.element?.last_name);
+    this.updateReactiveForm.get('email')?.setValue(data?.element?.email);
+    this.updateReactiveForm.get('password')?.setValue(data?.element?.password);
+    this.updateReactiveForm.get('mobile')?.setValue(data?.element?.mobile);
+    this.updateReactiveForm.get('balance')?.setValue(data?.element?.balance);
+  }
 
   ngOnInit() {
   }

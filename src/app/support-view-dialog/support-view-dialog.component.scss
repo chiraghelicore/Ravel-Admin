@@ -1,126 +1,365 @@
+.mat-dialog-container {
+  overflow: visible !important;
+}
+
+::ng-deep .mat-dialog-container {
+  padding: 0 24px !important;
+}
+
+
+
 .viewform {
-    width: 29vw;
-    height: 550px;
-    // position: absolute;
-    // left: 235px;
-    // top: 155px;
-    background: #ffffff;
-    box-shadow: 0px 5px 10px rgba(134, 142, 216, 0.25);
-    padding: 15px;
-  
-    .userid-view,
-    .title-view,
-    .status-view {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 275px;
+  width: auto;
+  height: 550px;
+  // position: absolute;
+  // left: 235px;
+  // top: 155px;
+  background: #ffffff;
+  box-shadow: 0px 5px 10px rgba(134, 142, 216, 0.25);
+  padding: 15px;
+
+  .userid-view,
+  .title-view,
+  .status-view {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 275px;
+    height: 45px;
+    margin-bottom: 30px;
+
+    label {
+      font-size: 15px;
+      line-height: 34px;
+      color: #171717;
+      font-family: "Manrope", sans-serif;
+      font-weight: bold;
+    }
+
+    input {
+      background: #eff0f6;
+      border-radius: 8px;
+      padding: 5px 16px;
+      border: hidden;
+      width: 200px;
       height: 45px;
-      margin-bottom: 30px;
-  
-      label {
-        font-size: 15px;
-        line-height: 34px;
-        color: #171717;
-        font-family: "Manrope", sans-serif;
-        font-weight: bold;
-      }
-  
-      input {
-        background: #eff0f6;
-        border-radius: 8px;
-        padding: 5px 16px;
-        border: hidden;
-        width: 200px;
-        height: 45px;
-        font-family: "Manrope", sans-serif;
-        font-size: 14px;
-        line-height: 34px;
-        font-weight: bolder;
+      font-family: "Manrope", sans-serif;
+      font-size: 14px;
+      line-height: 34px;
+      font-weight: bolder;
+    }
+
+    mat-select {
+      background: #eff0f6;
+      border-radius: 8px;
+      padding: 5px 16px;
+      border: hidden;
+      width: 200px;
+      height: 45px;
+      font-family: "Manrope", sans-serif;
+      font-size: 14px;
+      line-height: 34px;
+      font-weight: bolder;
+
+      .mat-select-value {
+        text-align: left !important;
       }
 
-      mat-select {
-        background: #eff0f6;
-        border-radius: 8px;
-        padding: 5px 16px;
-        border: hidden;
-        width: 200px;
-        height: 45px;
-        font-family: "Manrope", sans-serif;
-        font-size: 14px;
-        line-height: 34px;
-        font-weight: bolder;
 
-        .mat-select-value {
-          text-align: left !important;
-        }
-      }
-    }
-  
-    .error-view {
-      width: 413px;
-      height: 220px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 30px;
-  
-      label {
-        font-size: 15px;
-        line-height: 34px;
-        color: #171717;
-        font-family: "Manrope", sans-serif;
-        font-weight: bold;
-      }
-  
-      input {
-        background: #eff0f6;
-        border-radius: 10px;
-        padding: 5px 16px;
-        border: hidden;
-        width: 413px;
-        height: 175px;
-        font-family: "Manrope", sans-serif;
-        font-size: 14px;
-        line-height: 34px;
-        font-weight: bolder;
-      }
-    }
-  
-    .submit-btn {
-      background: radial-gradient(122.27% 198.92% at -22.27% -27.38%,
-          #44ace1 0%,
-          #1546a0 100%);
-      box-shadow: 0px 24px 48px -18px rgba(21, 70, 160, 0.5);
-      border-radius: 12px;
-      width: 105px;
-      height: 36px;
-      font-weight: bold;
-      font-size: 13px;
-      line-height: 22px;
-      font-family: "Manrope", sans-serif;
-      color: white;
-      border: hidden;
-      margin-left: 43%;
-    }
-  
-  
-    .cancel-btn {
-      background: radial-gradient(122.27% 198.92% at -22.27% -27.38%,
-          #ff8585 0%,
-          #ce2620 100%);
-      box-shadow: 0px 24px 48px -18px rgba(160, 58, 21, 0.5);
-      border-radius: 12px;
-      width: 105px;
-      height: 36px;
-      font-weight: bold;
-      font-size: 13px;
-      line-height: 22px;
-      font-family: "Manrope", sans-serif;
-      color: white;
-      border: hidden;
-      margin-left: 15px;
     }
   }
-  
+
+  .error-view {
+    width: 413px;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+
+    label {
+      font-size: 15px;
+      line-height: 34px;
+      color: #171717;
+      font-family: "Manrope", sans-serif;
+      font-weight: bold;
+    }
+
+    input {
+      background: #eff0f6;
+      border-radius: 10px;
+      padding: 5px 16px;
+      border: hidden;
+      width: 32.5vh;
+      height: 175px;
+      font-family: "Manrope", sans-serif;
+      font-size: 14px;
+      line-height: 34px;
+      font-weight: bolder;
+    }
+  }
+
+  .submit-btn {
+    background: radial-gradient(122.27% 198.92% at -22.27% -27.38%,
+        #44ace1 0%,
+        #1546a0 100%);
+    box-shadow: 0px 24px 48px -18px rgba(21, 70, 160, 0.5);
+    border-radius: 12px;
+    width: 105px;
+    height: 36px;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 22px;
+    font-family: "Manrope", sans-serif;
+    color: white;
+    border: hidden;
+  }
+
+
+  .cancel-btn {
+    background: radial-gradient(122.27% 198.92% at -22.27% -27.38%,
+        #ff8585 0%,
+        #ce2620 100%);
+    box-shadow: 0px 24px 48px -18px rgba(160, 58, 21, 0.5);
+    border-radius: 12px;
+    width: 105px;
+    height: 36px;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 22px;
+    font-family: "Manrope", sans-serif;
+    color: white;
+    border: hidden;
+    margin-left: 5px;
+  }
+}
+
+::ng-deep .mat-select-panel {
+  min-width: 0vh !important;
+  width: 30vh !important;
+  left: 591.125px !important
+}
+
+::ng-deep .cdk-overlay-pane {
+  width: 32vw;
+  // width: 80vh !important;
+}
+
+// @media screen and (max-width: 768px) {
+//   ::ng-deep .cdk-overlay-pane {
+//     max-width: 50vw !important;
+//     width: 80vh !important;
+//   }
+// }
+
+
+@media (max-width: 991.98px) {
+  ::ng-deep .cdk-overlay-pane {
+    width: 60vw !important;
+
+  }
+
+  ::ng-deep .mat-dialog-container {
+    padding: 0 24px !important;
+  }
+
+}
+
+@media screen and (min-width: 200px) and (max-width: 430px) {
+  ::ng-deep .mat-dialog-container {
+    width: 100% !important;
+    margin: auto !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  ::ng-deep .cdk-overlay-pane {
+    width: 80vw !important;
+  }
+
+
+
+  ::ng-deep .mat-dialog-container {
+    padding: 12px !important;
+    // width: 60% !important;
+    // margin: auto !important;
+  }
+
+
+
+  .viewform .userid-view {
+    width: 30vh !important;
+
+    input {
+      width: 270px !important;
+
+    }
+  }
+
+  .title-view {
+    width: 30vh !important;
+
+    input {
+      width: 270px !important;
+    }
+  }
+
+  .status-view {
+    width: 30vh !important;
+
+    mat-select {
+      width: 270px !important;
+    }
+  }
+
+  .error-view {
+    width: 413px;
+    height: 220px;
+
+    input {
+      width: 30.5vh;
+      height: 175px;
+    }
+  }
+}
+
+@media screen and (min-width: 0px) and (max-width: 768px) {
+
+  .viewform .userid-view {
+    width: 33vh !important;
+
+
+    input {
+      width: 12rem !important;
+    }
+  }
+
+  .title-view {
+    width: 33vh !important;
+
+    input {
+      width: 12rem !important;
+    }
+  }
+
+  .status-view {
+    width: 33vh !important;
+
+    input {
+      width: 12rem !important;
+    }
+  }
+
+  .error-view {
+    width: 33vh !important;
+    height: 220px;
+
+    input {
+      width: 32.5vh;
+      height: 175px;
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  // .viewform {
+  //   width: auto;
+  //   height: 550px;
+
+  //   .userid-view,
+  //   .title-view {
+  //     width: 275px
+  //   }
+
+  //   .status-view {
+  //     width: 290px;
+  //     height: 45px;
+
+  //     input {
+  //       width: 170px;
+  //       height: 45px;
+  //     }
+  //   }
+
+  //   .error-view {
+  //     width: 413px;
+  //     height: 220px;
+  //     display: flex;
+  //     flex-direction: column;
+  //     justify-content: space-between;
+  //     align-items: flex-start;
+  //     margin-bottom: 30px;
+
+  //     label {
+  //       font-size: 15px;
+  //       line-height: 34px;
+  //       color: #171717;
+  //       font-family: "Manrope", sans-serif;
+  //       font-weight: bold;
+  //     }
+
+  //     input {
+  //       background: #eff0f6;
+  //       border-radius: 10px;
+  //       padding: 5px 16px;
+  //       border: hidden;
+  //       width: 32.5vh;
+  //       height: 175px;
+  //       font-family: "Manrope", sans-serif;
+  //       font-size: 14px;
+  //       line-height: 34px;
+  //       font-weight: bolder;
+  //     }
+  //   }
+  // }
+
+}
+
+
+@media (max-width: 769px) {
+
+  ::ng-deep .cdk-overlay-pane {
+    width: 60vw;
+  }
+
+  ::ng-deep .mat-dialog-container {
+    width: 100% !important;
+    margin: auto !important;
+  }
+
+  .viewform .userid-view {
+    width: 37vh !important;
+
+    input {
+      width: 270px !important;
+
+    }
+  }
+
+  .title-view {
+    width: 37vh !important;
+
+    input {
+      width: 270px !important;
+    }
+  }
+
+  .status-view {
+    width: 37vh !important;
+
+    mat-select {
+      width: 270px !important;
+    }
+  }
+
+  .error-view {
+    width: 413px;
+    height: 220px;
+
+    input {
+      width: 30.5vh;
+      height: 175px;
+    }
+  }
+}

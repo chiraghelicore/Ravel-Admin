@@ -18,7 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class SupportComponent implements OnInit {
   displayedColumns = ['no', 'user_id', 'title', 'description', 'status', 'actions'];
 
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -38,6 +38,7 @@ export class SupportComponent implements OnInit {
 
   range!: FormGroup;
   username!: FormGroup;
+  isLoading: boolean = false;
 
   constructor(
     public datepipe: DatePipe,
@@ -45,7 +46,9 @@ export class SupportComponent implements OnInit {
     private _authservice: AuthServiceService,
     private http: HttpClient,
     public dialog: MatDialog
-  ) { }
+  ) {
+    this.isLoading = true;
+  }
 
   ngOnInit(): void {
 
@@ -101,14 +104,15 @@ export class SupportComponent implements OnInit {
     //   }
     // });
 
+
     this.dataSource.sortingDataAccessor = (data: any, property) => {
       console.log("DATA");
       console.log(data);
       switch (property) {
-        case 'user_id': return data.user_id;
+        case 'first_name': return data?.first_name;
         case 'title': return data?.title;
         case 'description': return data?.description;
-        case 'status': return data?.status;
+        case 'status': return this.status;
         default: return data[property];
       }
     }
@@ -197,10 +201,17 @@ export class SupportComponent implements OnInit {
           for (let index = from; index <= to; index++) {
             this.rowIndex.push(index);
           }
+
+          this.isLoading = false;
         },
         (err) => {
           console.log(err);
-          this._cmnservice.showError(err.error.message);
+          if (err && err.error && err.error.message) {
+            this._cmnservice.showError(err.error.message);
+          } else {
+            this._cmnservice.showError("Something went wrong");
+          }
+          this.isLoading = false;
         }
       );
     } else {
@@ -231,14 +242,25 @@ export class SupportComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           // console.log('datasource', this.dataSource);
 
-          this.dataSource.sort = this.sort;
+          setTimeout(
+            () =>
+              (this.dataSource.sort = this.sort),
+            10
+          );
+
+          this.isLoading = false;
 
           // console.log('link length :', this.links);
           // console.log('current page', this.currentPage);
         },
         (err) => {
           console.log(err);
-          this._cmnservice.showError(err.error.message);
+          if (err && err.error && err.error.message) {
+            this._cmnservice.showError(err.error.message);
+          } else {
+            this._cmnservice.showError("Something went wrong");
+          }
+          this.isLoading = false;
         }
       );
     }
@@ -302,18 +324,18 @@ export class SupportComponent implements OnInit {
     const dialogRef = this.dialog.open(
       SupportViewDialogComponent,
       {
-          autoFocus: false,
-          width: "32vw",
-          data: { element: rowdata }
+        autoFocus: false,
+        // width: "85vw",
+        data: { element: rowdata }
       }
-  );
+    );
 
-  dialogRef.afterClosed().subscribe((result: any) => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       if (result === 'success') {
         window.location.reload();
       }
 
-  });
+    });
 
     // this.viewReactiveForm.setValue({
     //   userid: rowdata.user_id,
