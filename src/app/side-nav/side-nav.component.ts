@@ -27,7 +27,12 @@ export class SideNavComponent implements OnInit {
         },
         err => {console.log(err);
   
-          this._cmnservice.showError(err);
+          // this._cmnservice.showError(err);
+          if (err && err.error && err.error.message) {
+            this._cmnservice.showError(err.error.message);
+          } else {
+            this._cmnservice.showError("Something went wrong");
+          }
         }
       )
     } 
