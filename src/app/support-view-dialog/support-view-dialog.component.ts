@@ -68,7 +68,11 @@ export class SupportViewDialogComponent implements OnInit {
         this.dialogRef.close('success');
       },
       (err) => {
-        this._cmnservice.showError(err.error.message);
+        if (err && err.error && err.error.message) {
+          this._cmnservice.showError(err.error.message);
+        } else {
+          this._cmnservice.showError("Something went wrong");
+        }
         console.log(err);
         this.dialogRef.close('error');
       }

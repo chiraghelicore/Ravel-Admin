@@ -60,7 +60,12 @@ export class LoginComponent implements OnInit {
         
       },
       err => {
-        this._cmnservice.showError(err);
+        // this._cmnservice.showError(err);
+        if (err && err.error && err.error.message) {
+          this._cmnservice.showError(err.error.message);
+        } else {
+          this._cmnservice.showError("Something went wrong");
+        }
         console.log("Error :-", err);
 
         this.loginerror = err; // err value get from authService(using catherror operator)
